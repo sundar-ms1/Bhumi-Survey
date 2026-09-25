@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="100%" height="100%">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="greenBGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0A3622"/>
+      <stop offset="40%" stop-color="#0F5132"/>
+      <stop offset="85%" stop-color="#198754"/>
+      <stop offset="100%" stop-color="#20c997"/>
+    </linearGradient>
+    <linearGradient id="orangeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#D97706"/>
+    </linearGradient>
+    <linearGradient id="hillGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F5132"/>
+      <stop offset="100%" stop-color="#1E7E34"/>
+    </linearGradient>
+    <clipPath id="bClip">
+      <!-- Path forming the silhouette of the stylized B letter -->
+      <path d="M 310,140 L 520,140 C 620,140 680,185 680,265 C 680,325 640,365 580,385 C 670,410 705,470 705,550 C 705,650 630,710 500,710 L 310,710 Z" />
+    </clipPath>
+  </defs>
+
+  <!-- Background is transparent -->
+
+  <!-- Top Left Compass Star -->
+  <g id="compass" transform="translate(250, 195)">
+    <!-- Ring -->
+    <circle cx="0" cy="0" r="54" fill="none" stroke="url(#orangeGrad)" stroke-width="7" />
+    <!-- 4-point Star -->
+    <polygon points="0,-72 13,-18 55,0 13,18 0,72 -13,18 -55,0 -13,-18" fill="#0A3622" />
+    <polygon points="0,-72 0,0 55,0" fill="#1E293B" opacity="0.3" />
+    <!-- Center Dot -->
+    <circle cx="0" cy="0" r="6" fill="#F59E0B" />
+    <!-- 'N' letter above star -->
+    <text x="0" y="-84" font-family="'Space Grotesk', 'Plus Jakarta Sans', sans-serif" font-size="28" font-weight="900" fill="#0A3622" text-anchor="middle">N</text>
+  </g>
+
+  <!-- Orange Swoop Arc on Left -->
+  <path d="M 380,685 C 240,685 140,550 140,410 C 140,350 170,290 220,240 C 185,295 165,360 170,430 C 178,520 250,650 375,680 Z" fill="url(#orangeGrad)" />
+
+  <!-- Green Swoop Base Tail -->
+  <path d="M 430,710 C 260,710 160,590 165,460 C 170,570 270,695 480,695 Z" fill="#0F5132" />
+
+  <!-- The Main Stylized 'B' Structure -->
+  <g id="main-B">
+    <path d="M 310,140 L 530,140 C 630,140 690,185 690,265 C 690,328 650,368 580,388 C 675,412 710,475 710,555 C 710,655 635,710 495,710 L 310,710 Z" fill="url(#greenBGrad)" />
+
+    <!-- Top Loop Cutout (modified to integrate the total station) -->
+    <path d="M 410,210 L 510,210 C 565,210 600,230 600,270 C 600,310 565,335 510,335 L 410,335 Z" fill="#FFFFFF" />
+
+    <!-- Bottom Hill Landscape Inside B with Contour Lines -->
+    <g clip-path="url(#bClip)">
+      <!-- Gradient Hill Shapes -->
+      <path d="M 300,530 Q 420,440 550,470 T 720,420 L 720,720 L 300,720 Z" fill="url(#hillGrad)" />
+      
+      <!-- Topographic Contour Lines -->
+      <path d="M 310,560 Q 430,470 560,500 T 710,460" fill="none" stroke="#A7F3D0" stroke-width="4.5" opacity="0.85" />
+      <path d="M 310,595 Q 440,515 570,535 T 710,500" fill="none" stroke="#A7F3D0" stroke-width="4" opacity="0.85" />
+      <path d="M 310,630 Q 450,560 580,570 T 710,545" fill="none" stroke="#A7F3D0" stroke-width="3.5" opacity="0.85" />
+      <path d="M 310,665 Q 460,600 590,610 T 710,590" fill="none" stroke="#A7F3D0" stroke-width="3" opacity="0.8" />
+      <path d="M 430,680 Q 530,640 630,645 T 710,635" fill="none" stroke="#A7F3D0" stroke-width="3" opacity="0.75" />
+      <path d="M 520,685 Q 580,670 650,675 T 710,670" fill="none" stroke="#A7F3D0" stroke-width="2.5" opacity="0.7" />
+    </g>
+  </g>
+
+  <!-- White Silhouette / Negative Space for Total Station Placement -->
+  <path d="M 310,140 L 415,140 L 415,710 L 310,710 Z" fill="#0A3622" />
+
+  <!-- Total Station & Heavy-Duty Tripod in White & Dark Slate -->
+  <g id="total-station">
+    <!-- Tripod Legs -->
+    <!-- Center leg -->
+    <polygon points="485,350 493,350 497,690 481,690" fill="#0F172A" stroke="#FFFFFF" stroke-width="4" />
+    <!-- Left leg -->
+    <polygon points="475,350 483,350 380,680 365,675" fill="#0F172A" stroke="#FFFFFF" stroke-width="4" />
+    <!-- Right leg -->
+    <polygon points="495,350 503,350 610,680 625,675" fill="#0F172A" stroke="#FFFFFF" stroke-width="4" />
+
+    <!-- Leg Struts & Braces -->
+    <line x1="415" y1="520" x2="560" y2="520" stroke="#FFFFFF" stroke-width="5" />
+    <line x1="435" y1="580" x2="540" y2="580" stroke="#FFFFFF" stroke-width="4" />
+
+    <!-- Tribrach & Base Mount -->
+    <rect x="460" y="340" width="60" height="16" rx="4" fill="#1E293B" stroke="#FFFFFF" stroke-width="3" />
+    <circle cx="470" cy="348" r="4" fill="#F59E0B" />
+    <circle cx="510" cy="348" r="4" fill="#F59E0B" />
+
+    <!-- Total Station Instrument Body -->
+    <path d="M 455,230 L 525,230 L 525,340 L 455,340 Z" fill="#0F172A" stroke="#FFFFFF" stroke-width="5" />
+    <!-- Carry Handle on Top -->
+    <path d="M 465,230 L 465,210 L 515,210 L 515,230" fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linejoin="round" />
+    
+    <!-- Central Lens / Optical Unit -->
+    <circle cx="490" cy="280" r="24" fill="#0F5132" stroke="#FFFFFF" stroke-width="5" />
+    <circle cx="490" cy="280" r="16" fill="#10B981" />
+    <circle cx="490" cy="280" r="8" fill="#047857" />
+    <circle cx="486" cy="276" r="3" fill="#FFFFFF" />
+
+    <!-- Digital Display Keypad Panel -->
+    <rect x="468" y="315" width="44" height="16" rx="2" fill="#38BDF8" stroke="#FFFFFF" stroke-width="2" />
+  </g>
+
+  <!-- Typography: BHUMI SURVEY -->
+  <text x="400" y="775" font-family="'Space Grotesk', sans-serif" font-size="52" font-weight="900" fill="#0A3622" text-anchor="middle" letter-spacing="1">BHUMI SURVEY</text>
+</svg>

@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bhumi Survey | Topo Mapping & Surveying Consultant</title>
+  <meta name="description" content="Professional Topographical Mapping, Total Station Survey, Block Levels, and Land Surveying Consultants based in Bengaluru." />
+  
+  <!-- Google Fonts & Font Awesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <style>
+    :root {
+      --primary: #0F5132;
+      --primary-dark: #0A3622;
+      --primary-light: #198754;
+      --accent: #E58E26;
+      --accent-hover: #D35400;
+      --dark: #0F172A;
+      --slate: #334155;
+      --muted: #64748B;
+      --light-bg: #F8FAFC;
+      --card-bg: #FFFFFF;
+      --border: #E2E8F0;
+      --whatsapp-green: #25D366;
+      --whatsapp-dark: #128C7E;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--slate);
+      background-color: var(--light-bg);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      color: var(--dark);
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Top utility bar */
+    .topbar {
+      background: var(--dark);
+      color: #94A3B8;
+      font-size: 0.85rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .topbar-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .topbar a {
+      color: #CBD5E1;
+      margin-right: 1.2rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: color 0.2s;
+    }
+    .topbar a:hover {
+      color: var(--accent);
+    }
+
+    /* Navbar */
+    .navbar {
+      background: #FFFFFF;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.85rem 1.5rem;
+    }
+    .brand-logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+    .brand-logo-img {
+      height: 58px;
+      width: auto;
+      object-fit: contain;
+    }
+    .brand-text h1 {
+      font-size: 1.35rem;
+      letter-spacing: 0.5px;
+      color: var(--primary);
+    }
+    .brand-text span {
+      display: block;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 1px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.8rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--slate);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+    .btn-nav-book {
+      background: var(--primary);
+      color: #FFFFFF !important;
+      padding: 0.65rem 1.25rem;
+      border-radius: 8px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+    }
+    .btn-nav-book:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(15, 81, 50, 0.3);
+    }
+
+    /* Hero section */
+    .hero {
+      background: linear-gradient(135deg, #0A3622 0%, #0F5132 50%, #157347 100%);
+      color: #FFFFFF;
+      padding: 5rem 0 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 80% 20%, rgba(229, 142, 38, 0.18) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 3rem;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.25);
+      padding: 0.35rem 0.9rem;
+      border-radius: 50px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #F8FAFC;
+      margin-bottom: 1.2rem;
+    }
+    .hero-badge i {
+      color: var(--accent);
+    }
+    .hero h1 {
+      color: #FFFFFF;
+      font-size: 2.8rem;
+      margin-bottom: 1.2rem;
+      letter-spacing: -0.5px;
+    }
+    .hero p {
+      font-size: 1.1rem;
+      color: #D1E7DD;
+      margin-bottom: 2rem;
+      max-width: 600px;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .btn-hero-primary {
+      background: var(--accent);
+      color: #FFFFFF;
+      font-weight: 700;
+      padding: 0.9rem 1.8rem;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      box-shadow: 0 4px 15px rgba(229, 142, 38, 0.4);
+      transition: all 0.25s;
+    }
+    .btn-hero-primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+    }
+    .btn-hero-wa {
+      background: var(--whatsapp-green);
+      color: #FFFFFF;
+      font-weight: 700;
+      padding: 0.9rem 1.8rem;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.35);
+      transition: all 0.25s;
+    }
+    .btn-hero-wa:hover {
+      background: var(--whatsapp-dark);
+      transform: translateY(-2px);
+    }
+
+    .hero-card-preview {
+      background: #FFFFFF;
+      border-radius: 16px;
+      padding: 1.8rem;
+      color: var(--dark);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+      border: 1px solid rgba(255,255,255,0.4);
+    }
+    .hero-card-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-card-header img {
+      width: 50px;
+      height: 50px;
+      object-fit: contain;
+    }
+    .metric-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .metric-box {
+      background: var(--light-bg);
+      padding: 1rem;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+    .metric-box h4 {
+      font-size: 1.6rem;
+      color: var(--primary);
+    }
+    .metric-box p {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    /* Section Headers */
+    .section {
+      padding: 4.5rem 0;
+    }
+    .section-title-wrap {
+      text-align: center;
+      max-width: 650px;
+      margin: 0 auto 3rem;
+    }
+    .section-sub {
+      color: var(--accent);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      letter-spacing: 1.5px;
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+    .section-title {
+      font-size: 2.2rem;
+      margin-bottom: 0.75rem;
+    }
+    .section-desc {
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    /* Services Grid */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+    .service-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.8rem;
+      transition: all 0.3s;
+      position: relative;
+    }
+    .service-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+      border-color: var(--primary-light);
+    }
+    .service-icon {
+      width: 52px;
+      height: 52px;
+      background: #E8F5E9;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      border-radius: 10px;
+      margin-bottom: 1.2rem;
+    }
+    .service-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.6rem;
+    }
+    .service-card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* Track Record Section */
+    .track-record-bg {
+      background: #FFFFFF;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+    .project-card {
+      background: var(--light-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      padding: 1.5rem;
+    }
+    .project-pill {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--primary);
+      background: #DCFCE7;
+      padding: 0.25rem 0.65rem;
+      border-radius: 20px;
+      margin-bottom: 0.75rem;
+    }
+    .project-card h4 {
+      font-size: 1.25rem;
+      margin-bottom: 0.4rem;
+    }
+    .project-meta {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.9rem;
+    }
+    .project-specs {
+      list-style: none;
+      font-size: 0.88rem;
+    }
+    .project-specs li {
+      margin-bottom: 0.35rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .project-specs i {
+      color: var(--primary-light);
+    }
+
+    /* REQUEST SURVEY VISIT BOOKING SECTION */
+    .booking-section {
+      background: linear-gradient(180deg, #F8FAFC 0%, #EEF2F6 100%);
+      position: relative;
+    }
+    .booking-container {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 2.5rem;
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.06);
+      overflow: hidden;
+      padding: 2.5rem;
+    }
+    .booking-header {
+      margin-bottom: 1.8rem;
+    }
+    .booking-header h2 {
+      font-size: 2rem;
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+    }
+    .booking-header p {
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+    }
+    .form-group-full {
+      grid-column: span 2;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--slate);
+      margin-bottom: 0.35rem;
+    }
+    .form-control {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      background: #FFFFFF;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(15, 81, 50, 0.15);
+    }
+
+    .btn-send-whatsapp {
+      background: #25D366;
+      color: #FFFFFF;
+      font-size: 1.05rem;
+      font-weight: 800;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 10px;
+      cursor: pointer;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      letter-spacing: 0.5px;
+      transition: all 0.25s;
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+      margin-top: 1rem;
+    }
+    .btn-send-whatsapp:hover {
+      background: #1EBE5D;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
+    }
+
+    /* WhatsApp Live Chat Bubble */
+    .whatsapp-preview-card {
+      background: #ECE5DD;
+      border-radius: 16px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #D6D2CC;
+      height: 100%;
+    }
+    .wa-card-header {
+      background: #075E54;
+      color: #FFFFFF;
+      padding: 0.8rem 1rem;
+      border-radius: 10px 10px 0 0;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .wa-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      font-weight: 800;
+    }
+    .wa-chat-window {
+      background: #EFEAE2;
+      background-image: radial-gradient(#DDD 10%, transparent 11%);
+      background-size: 10px 10px;
+      flex-grow: 1;
+      padding: 1.2rem;
+      overflow-y: auto;
+      border-radius: 0 0 10px 10px;
+    }
+    .wa-bubble {
+      background: #FFFFFF;
+      padding: 1rem;
+      border-radius: 10px;
+      font-size: 0.86rem;
+      line-height: 1.5;
+      color: #111;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+      position: relative;
+    }
+    .wa-bubble pre {
+      white-space: pre-wrap;
+      font-family: inherit;
+    }
+    .wa-timestamp {
+      font-size: 0.7rem;
+      color: #888;
+      text-align: right;
+      margin-top: 0.4rem;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--dark);
+      color: #94A3B8;
+      padding: 4rem 0 2rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+    .footer-brand h3 {
+      color: #FFFFFF;
+      font-size: 1.4rem;
+      margin-bottom: 0.6rem;
+    }
+    .footer-brand p {
+      font-size: 0.9rem;
+      margin-bottom: 1.2rem;
+      max-width: 380px;
+    }
+    .footer-contact li {
+      list-style: none;
+      margin-bottom: 0.8rem;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+    }
+    .footer-contact i {
+      color: var(--accent);
+      margin-top: 0.25rem;
+    }
+    .footer-bottom {
+      text-align: center;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.82rem;
+      color: #64748B;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hero-grid, .booking-container, .footer-grid {
+        grid-template-columns: 1fr;
+      }
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+      .form-group-full {
+        grid-column: span 1;
+      }
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+      .nav-links {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Contact Bar -->
+  <div class="topbar">
+    <div class="container topbar-content">
+      <div>
+        <a href="tel:+917483091924"><i class="fa-solid fa-phone"></i> +91 74830 91924</a>
+        <a href="tel:+918310689058"><i class="fa-solid fa-phone"></i> +91 83106 89058</a>
+        <a href="mailto:bhumisurvey@gmail.com"><i class="fa-solid fa-envelope"></i> bhumisurvey@gmail.com</a>
+      </div>
+      <div>
+        <span><i class="fa-solid fa-location-dot" style="color:var(--accent);"></i> Medahalli, Bengaluru - 560049</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <div class="brand-logo-wrap">
+        <img src="logo.svg" alt="Bhumi Survey Logo" class="brand-logo-img" />
+        <div class="brand-text">
+          <h1>BHUMI SURVEY</h1>
+          <span>TOPO MAPPING & SURVEYING CONSULTANT</span>
+        </div>
+      </div>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#services">Services</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li>
+            <a href="#book-survey" class="btn-nav-book">
+              <i class="fa-brands fa-whatsapp"></i> Request Visit
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="hero-badge">
+          <i class="fa-solid fa-crosshairs"></i> Topo Mapping & Precision Survey Consultants
+        </div>
+        <h1>Precision Geodetic, Boundary & Elevation Surveys.</h1>
+        <p>
+          Executing Total Station contour mappings, high-accuracy block levelling, and layout demarcations across Karnataka & South India for construction, schools, highways, and infrastructure.
+        </p>
+        <div class="hero-actions">
+          <a href="#book-survey" class="btn-hero-primary">
+            <i class="fa-solid fa-calendar-check"></i> Request On-Site Survey
+          </a>
+          <a href="https://api.whatsapp.com/send?phone=917483091924&text=Hello%20Bhumi%20Survey,%20I%20would%20like%20to%20inquire%20about%20a%20land%20survey." target="_blank" class="btn-hero-wa">
+            <i class="fa-brands fa-whatsapp"></i> Quick WhatsApp
+          </a>
+        </div>
+      </div>
+      <div>
+        <div class="hero-card-preview">
+          <div class="hero-card-header">
+            <img src="logo.svg" alt="Bhumi Survey" />
+            <div>
+              <h3 style="font-size:1.15rem; color:var(--dark);">Verified Field Reliability</h3>
+              <p style="font-size:0.8rem; color:var(--muted); margin:0;">Bengaluru Registered Consultancy</p>
+            </div>
+          </div>
+          <div class="metric-row">
+            <div class="metric-box">
+              <h4>100%</h4>
+              <p>Total Station & DGPS Precision</p>
+            </div>
+            <div class="metric-box">
+              <h4>24-48h</h4>
+              <p>Mobilization Turnaround</p>
+            </div>
+          </div>
+          <p style="font-size:0.85rem; color:var(--slate); margin:0;">
+            <i class="fa-solid fa-circle-check" style="color:var(--primary-light);"></i> Complete CAD / DXF Contours & Elevation profiles delivered after fieldwork.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section id="services" class="section">
+    <div class="container">
+      <div class="section-title-wrap">
+        <span class="section-sub">Comprehensive Expertise</span>
+        <h2 class="section-title">Surveying & Mapping Capabilities</h2>
+        <p class="section-desc">From initial boundary demarcations to micro-topographical mapping for large scale civil structures.</p>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon"><i class="fa-solid fa-map-location-dot"></i></div>
+          <h3>Topographical Mapping</h3>
+          <p>Detailed contour generation, elevation grid creation, and spatial feature mapping for master planning and civil engineering.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><i class="fa-solid fa-crosshairs"></i></div>
+          <h3>Total Station Survey</h3>
+          <p>Sub-centimeter accuracy boundary markouts, building column grid lines, alignment checking, and baseline establishment.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><i class="fa-solid fa-layer-group"></i></div>
+          <h3>Block Levels & Earthwork</h3>
+          <p>Accurate cut & fill earthwork volume calculations, grid-based spot elevation levels, and digital terrain elevation models (DTM).</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><i class="fa-solid fa-draw-polygon"></i></div>
+          <h3>Layout Demarcation</h3>
+          <p>Plot layout plotting, road centerlines, municipal boundary verification, and legal property boundary demarcations.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Track Record / Projects -->
+  <section id="projects" class="section track-record-bg">
+    <div class="container">
+      <div class="section-title-wrap">
+        <span class="section-sub">Field Proven</span>
+        <h2 class="section-title">Featured Project Deliveries</h2>
+        <p class="section-desc">Examples of recent commercial, educational, and residential surveying assignments completed.</p>
+      </div>
+
+      <div class="project-grid">
+        <div class="project-card">
+          <span class="project-pill">Educational Campus</span>
+          <h4>Amble School Project</h4>
+          <p class="project-meta"><i class="fa-solid fa-location-dot"></i> Chikkamagaluru, Karnataka</p>
+          <ul class="project-specs">
+            <li><i class="fa-solid fa-check"></i> Total Station Survey Marking & Block Levels</li>
+            <li><i class="fa-solid fa-check"></i> Multi-day comprehensive contour & grading survey</li>
+            <li><i class="fa-solid fa-check"></i> Complete CAD elevations & report delivery</li>
+          </ul>
+        </div>
+
+        <div class="project-card">
+          <span class="project-pill">Urban Infrastructure</span>
+          <h4>Banashankari Development</h4>
+          <p class="project-meta"><i class="fa-solid fa-location-dot"></i> Bangalore Rural, Karnataka</p>
+          <ul class="project-specs">
+            <li><i class="fa-solid fa-check"></i> Boundary verification & road corridor alignment</li>
+            <li><i class="fa-solid fa-check"></i> Spot levels for stormwater drainage design</li>
+            <li><i class="fa-solid fa-check"></i> High precision layout staking & plotting</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Request Survey Visit Form (Direct to WhatsApp) -->
+  <section id="book-survey" class="section booking-section">
+    <div class="container">
+      <div class="booking-container">
+        
+        <!-- Form Side -->
+        <div>
+          <div class="booking-header">
+            <h2>Request an On-Site Survey Visit</h2>
+            <p>Complete the project brief below to receive a call back and mobilization date</p>
+          </div>
+
+          <form id="surveyBookingForm" onsubmit="event.preventDefault(); sendToWhatsApp();">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="clientName">Your Name / Contact Person *</label>
+                <input type="text" id="clientName" class="form-control" placeholder="e.g. Sivaprasad / Ramesh" required oninput="updatePreview()" />
+              </div>
+
+              <div class="form-group">
+                <label for="companyName">Company / Firm Name</label>
+                <input type="text" id="companyName" class="form-control" placeholder="e.g. Sivaprasad Construction" oninput="updatePreview()" />
+              </div>
+
+              <div class="form-group">
+                <label for="clientPhone">Phone Number *</label>
+                <input type="tel" id="clientPhone" class="form-control" placeholder="e.g. 9876543210" required oninput="updatePreview()" />
+              </div>
+
+              <div class="form-group">
+                <label for="surveyType">Service Required *</label>
+                <select id="surveyType" class="form-control" onchange="updatePreview()">
+                  <option value="Total Station Survey Marking & Block Levels">Total Station Survey & Block Levels</option>
+                  <option value="Topographical Survey & Contouring">Topographical Survey & Contouring</option>
+                  <option value="Boundary Demarcation & Plotting">Boundary Demarcation & Plotting</option>
+                  <option value="Road / Alignment Levelling">Road / Alignment Levelling</option>
+                  <option value="Volume & Earthwork Calculation">Volume & Earthwork Calculation</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="siteLocation">Site Location / City *</label>
+                <input type="text" id="siteLocation" class="form-control" placeholder="e.g. Chikkamagaluru / Banashankari" required oninput="updatePreview()" />
+              </div>
+
+              <div class="form-group">
+                <label for="approxArea">Approx. Land Extent / Area</label>
+                <input type="text" id="approxArea" class="form-control" placeholder="e.g. 5 Acres / 2400 sq.ft" oninput="updatePreview()" />
+              </div>
+
+              <div class="form-group">
+                <label for="targetDate">Target Visit Date</label>
+                <input type="date" id="targetDate" class="form-control" onchange="updatePreview()" />
+              </div>
+
+              <div class="form-group">
+                <label for="waTargetNum">Send To Phone Number</label>
+                <select id="waTargetNum" class="form-control" onchange="updatePreview()">
+                  <option value="917483091924">+91 74830 91924 (Primary)</option>
+                  <option value="918310689058">+91 83106 89058 (Alternate)</option>
+                </select>
+              </div>
+
+              <div class="form-group form-group-full">
+                <label for="siteNotes">Additional Site Scope / Notes</label>
+                <textarea id="siteNotes" class="form-control" rows="2" placeholder="e.g. Need contour interval at 0.5m and CAD drawing in DWG format." oninput="updatePreview()"></textarea>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-send-whatsapp">
+              <i class="fa-brands fa-whatsapp" style="font-size:1.4rem;"></i> SEND THE REQUEST MESSAGE TO WHATSAPP
+            </button>
+          </form>
+        </div>
+
+        <!-- WhatsApp Live Preview Side -->
+        <div>
+          <div class="whatsapp-preview-card">
+            <div class="wa-card-header">
+              <div class="wa-avatar"><i class="fa-solid fa-compass"></i></div>
+              <div>
+                <div style="font-weight:700; font-size:0.95rem;">Bhumi Survey Desk</div>
+                <div style="font-size:0.75rem; opacity:0.85;">Instant Mobilization Dispatch</div>
+              </div>
+            </div>
+            <div class="wa-chat-window">
+              <div class="wa-bubble">
+                <pre id="previewText">Fill out the form on the left to see your formatted survey visit inquiry here in real-time...</pre>
+                <div class="wa-timestamp" id="previewTime">Just now</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer & Contact Details -->
+  <footer id="contact">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <h3>BHUMI SURVEY</h3>
+        <p>Topo Mapping & Surveying Consultants providing high accuracy topographical maps, Total Station alignments, and engineering levels.</p>
+        <div style="font-size:0.85rem; color:#CBD5E1;">
+          <p><strong>GSTIN:</strong> 29ACOFS9697K1Z</p>
+          <p><strong>PAN:</strong> FQMPS9107M</p>
+        </div>
+      </div>
+      <div>
+        <h4 style="color:#FFF; margin-bottom:1rem; font-size:1.1rem;">Quick Services</h4>
+        <ul style="list-style:none; font-size:0.9rem; line-height:2;">
+          <li>• Total Station Surveying</li>
+          <li>• Topographical Contouring</li>
+          <li>• Block Level Cut & Fill Calculations</li>
+          <li>• Cadastral Demarcation</li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="color:#FFF; margin-bottom:1rem; font-size:1.1rem;">Registered Office</h4>
+        <ul class="footer-contact">
+          <li>
+            <i class="fa-solid fa-location-dot"></i>
+            <span>21, 2nd Main Road, Vinayaka layout, Medahalli, Bengaluru - 560049</span>
+          </li>
+          <li>
+            <i class="fa-solid fa-phone"></i>
+            <span>+91 74830 91924 / +91 83106 89058</span>
+          </li>
+          <li>
+            <i class="fa-solid fa-envelope"></i>
+            <span>bhumisurvey@gmail.com</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      &copy; Bhumi Survey - Topo Mapping & Surveying Consultant. All Rights Reserved.
+    </div>
+  </footer>
+
+  <!-- Script for WhatsApp Formatting and Auto Preview -->
+  <script>
+    function generateWhatsAppMessage() {
+      const name = document.getElementById('clientName').value.trim() || '[Your Name]';
+      const company = document.getElementById('companyName').value.trim();
+      const phone = document.getElementById('clientPhone').value.trim() || '[Phone Number]';
+      const service = document.getElementById('surveyType').value;
+      const location = document.getElementById('siteLocation').value.trim() || '[Location]';
+      const area = document.getElementById('approxArea').value.trim();
+      const date = document.getElementById('targetDate').value;
+      const notes = document.getElementById('siteNotes').value.trim();
+
+      let msg = `*NEW SURVEY VISIT REQUEST - BHUMI SURVEY*\n`;
+      msg += `------------------------------------\n`;
+      msg += `*Client / Contact:* ${name}\n`;
+      if (company) msg += `*Firm / Company:* ${company}\n`;
+      msg += `*Phone:* ${phone}\n`;
+      msg += `*Required Service:* ${service}\n`;
+      msg += `*Site Location:* ${location}\n`;
+      if (area) msg += `*Approx. Extent:* ${area}\n`;
+      if (date) msg += `*Target Date:* ${date}\n`;
+      if (notes) msg += `*Site Notes:* ${notes}\n`;
+      msg += `------------------------------------\n`;
+      msg += `Sent via Bhumi Survey Portal. Please confirm availability and mobilization date.`;
+
+      return msg;
+    }
+
+    function updatePreview() {
+      const msg = generateWhatsAppMessage();
+      document.getElementById('previewText').textContent = msg.replace(/\\n/g, '\n');
+      
+      const now = new Date();
+      document.getElementById('previewTime').textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+
+    function sendToWhatsApp() {
+      const name = document.getElementById('clientName').value.trim();
+      const phone = document.getElementById('clientPhone').value.trim();
+      const location = document.getElementById('siteLocation').value.trim();
+
+      if (!name || !phone || !location) {
+        alert('Please complete the required fields: Your Name, Phone Number, and Site Location.');
+        return;
+      }
+
+      const msg = generateWhatsAppMessage();
+      const targetPhone = document.getElementById('waTargetNum').value;
+      const waUrl = `https://api.whatsapp.com/send?phone=${targetPhone}&text=${encodeURIComponent(msg.replace(/\\n/g, '\n'))}`;
+
+      window.open(waUrl, '_blank');
+    }
+
+    // Initialize preview on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      updatePreview();
+    });
+  </script>
+</body>
+</html>
