@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bhumi Survey — Review Admin</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+body{font-family:Arial,sans-serif;background:#f8fafc;color:#0f172a;margin:0}
+.wrap{max-width:1100px;margin:40px auto;padding:0 20px}
+.card{background:#fff;border:1px solid #e2e8f0;border-radius:18px;padding:22px;margin-bottom:20px;box-shadow:0 8px 30px #0f172a0b}
+input,button{font:inherit;padding:12px;border-radius:10px;border:1px solid #cbd5e1}
+input{width:100%;margin:6px 0 12px;box-sizing:border-box}
+button{cursor:pointer;background:#0f5132;color:#fff;border:0;margin:4px 8px 4px 0}
+.reject{background:#b45309}.delete{background:#b91c1c}
+.hidden{display:none}.review{border-top:1px solid #e2e8f0;padding:18px 0}
+.stars{color:#f59e0b;font-size:20px}.muted{color:#64748b}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Bhumi Survey Review Admin</h1>
+<div id="loginCard" class="card">
+<h2>Admin Login</h2>
+<p class="muted">Only an account listed in <code>review_admins</code> can moderate reviews.</p>
+<input id="email" type="email" placeholder="Admin email">
+<input id="password" type="password" placeholder="Password">
+<button onclick="login()">Sign in</button>
+<p id="loginStatus"></p>
+</div>
+
+<div id="adminCard" class="card hidden">
+<p>Signed in as <strong id="adminEmail"></strong></p>
+<button onclick="loadReviews()">Refresh</button>
+<button onclick="logout()">Sign out</button>
+<p id="status"></p>
+<div id="reviews"></div>
+</div>
+</div>
+
+<script>
+const SUPABASE_URL="https://kbtqrmqabasitsvhvwfy.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY="sb_publishable_d8kvgGwrWAC0yFiz6c0oyw_HPnZcU1d";
+const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
+
+async function login(){
+ const {data,error}=await sb.auth.signInWithPassword({
+   email:document.getElementById("email").value.trim(),
+   password:document.getElementById("password").value
+ });
+ if(error){document.getElementById("loginStatus").textContent=error.message;return;}
+ await showAdmin(data.user);
+}
+async function showAdmin(user){
+ const {data:admin,error}=await sb.from("review_admins").select("user_id").eq("user_id",user.id).maybeSingle();
+ if(error||!admin){
+   await sb.auth.signOut();
+   document.getElementById("loginStatus").textContent="This account is not an approved review admin.";
+   return;
+ }
+ document.getElementById("loginCard").classList.add("hidden");
+ document.getElementById("adminCard").classList.remove("hidden");
+ document.getElementById("adminEmail").textContent=user.email||"";
+ loadReviews();
+}
+async function loadReviews(){
+ const box=document.getElementById("reviews");
+ box.textContent="Loading…";
+ const {data,error}=await sb.from("reviews").select("*").order("created_at",{ascending:false});
+ if(error){box.textContent=error.message;return;}
+ box.innerHTML=(data||[]).map(r=>`
+ <div class="review">
+   <h3>${escapeHtml(r.name)} <span class="stars">${"★".repeat(r.rating)}${"☆".repeat(5-r.rating)}</span></h3>
+   <div class="muted">${escapeHtml(r.project||"")} · ${new Date(r.created_at).toLocaleString()}</div>
+   <p>${escapeHtml(r.message)}</p>
+   <strong>Status: ${escapeHtml(r.status)}</strong><br><br>
+   ${r.status!=="approved"?`<button onclick="setStatus('${r.id}','approved')">Approve</button>`:""}
+   ${r.status!=="rejected"?`<button class="reject" onclick="setStatus('${r.id}','rejected')">Reject</button>`:""}
+   <button class="delete" onclick="deleteReview('${r.id}')">Delete</button>
+ </div>`).join("")||"<p>No reviews.</p>";
+}
+async function setStatus(id,status){
+ const {data:user}=await sb.auth.getUser();
+ const {error}=await sb.from("reviews").update({
+   status,
+   approved_at:status==="approved"?new Date().toISOString():null,
+   approved_by:status==="approved"?user.user.id:null
+ }).eq("id",id);
+ if(error)alert(error.message);else loadReviews();
+}
+async function deleteReview(id){
+ if(!confirm("Delete this review permanently?"))return;
+ const {error}=await sb.from("reviews").delete().eq("id",id);
+ if(error)alert(error.message);else loadReviews();
+}
+async function logout(){await sb.auth.signOut();location.reload();}
+function escapeHtml(v){return String(v).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
+sb.auth.getUser().then(({data})=>{if(data.user)showAdmin(data.user);});
+</script>
+</body>
+</html>

@@ -948,6 +948,7 @@ body{overflow-x:hidden}
 .hero-card-preview { z-index:60 !important; }
 .hero-scroll-cue { z-index:100 !important; }
 </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
 <body>
@@ -1293,7 +1294,11 @@ body{overflow-x:hidden}
         <p class="section-desc">Photos from our latest surveying and Total Station field projects.</p>
       </div>
       <div id="projectGallery" class="project-gallery"></div>
-  
+      <div class="project-admin-note">
+        <strong>Easy photo update:</strong> upload new photos to the same folder as
+        <strong>index.html</strong>, then edit only the <strong>PROJECT_PHOTOS</strong>
+        list near the bottom of this file. Add, remove or replace projects there.
+      </div>
     </div>
   </section>
 
@@ -1397,7 +1402,7 @@ body{overflow-x:hidden}
         <div class="review-form-card">
           <h3>Leave a Review</h3>
           <p style="color:var(--muted);font-size:.88rem;margin-top:.25rem;">
-            Choose a star rating and publish your review directly on this website.
+            Choose a star rating and submit your review securely. Reviews are published only after admin approval.
           </p>
           <form id="reviewForm" onsubmit="event.preventDefault(); submitWebsiteReview();">
             <div class="form-grid" style="margin-top:1rem;">
@@ -1424,10 +1429,17 @@ body{overflow-x:hidden}
                 <textarea id="reviewMessage" class="form-control" rows="4" required placeholder="Tell us about your experience..."></textarea>
               </div>
             </div>
+            <div aria-hidden="true" style="position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden;">
+              <label for="website">Leave this field empty</label>
+              <input id="website" name="website" tabindex="-1" autocomplete="off">
+            </div>
+            <input type="hidden" id="reviewStartedAt" value="">
             <button type="submit" class="review-submit">
-              <i class="fa-solid fa-paper-plane"></i> PUBLISH REVIEW ON WEBSITE
+              <i class="fa-solid fa-paper-plane"></i> SUBMIT REVIEW
             </button>
-            <p id="reviewSubmitStatus" class="review-note">Your review will be saved in this browser and displayed on this website.</p>
+            <p id="reviewSubmitStatus" class="review-note">
+              Your review will be securely submitted for admin approval.
+            </p>
           </form>
         </div>
       </div>
@@ -2023,12 +2035,73 @@ body{overflow-x:hidden}
         </article>`).join("");
     }
 
-    function submitWebsiteReview() {
+
+    /* ================= SUPABASE PUBLIC REVIEWS ================= */
+    const SUPABASE_URL = "https://kbtqrmqabasitsvhvwfy.supabase.co";
+    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_d8kvgGwrWAC0yFiz6c0oyw_HPnZcU1d";
+    const REVIEW_FUNCTION = `${SUPABASE_URL}/functions/v1/submit-review`;
+
+    let supabaseClient = null;
+
+    function supabaseReady() {
+      return SUPABASE_URL.startsWith("https://")
+        && !SUPABASE_URL.includes("YOUR_SUPABASE")
+        && SUPABASE_PUBLISHABLE_KEY
+        && !SUPABASE_PUBLISHABLE_KEY.includes("YOUR_SUPABASE");
+    }
+
+    async function loadWebsiteReviews() {
+      const grid = document.getElementById("reviewsGrid");
+      if (!grid || !supabaseReady() || !window.supabase) {
+        renderReviews();
+        return;
+      }
+
+      if (!supabaseClient) {
+        supabaseClient = window.supabase.createClient(
+          SUPABASE_URL,
+          SUPABASE_PUBLISHABLE_KEY
+        );
+      }
+
+      const { data, error } = await supabaseClient
+        .from("reviews")
+        .select("id,name,project,rating,message,created_at")
+        .eq("status", "approved")
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        console.error("Review load failed:", error);
+        return;
+      }
+
+      const publicReviews = (data || []).map(r => ({
+        id: r.id,
+        name: r.name,
+        project: r.project || "",
+        rating: Number(r.rating),
+        date: new Date(r.created_at).toLocaleDateString("en-IN", {
+          day: "2-digit",
+          month: "short",
+          year: "numeric"
+        }),
+        text: r.message,
+        source: "Verified Website Review"
+      }));
+
+      REVIEWS.splice(0, REVIEWS.length, ...publicReviews);
+      renderReviews();
+    }
+
+    async function submitWebsiteReview() {
       const name = document.getElementById("reviewerName").value.trim();
       const project = document.getElementById("reviewProject").value.trim();
       const rating = document.querySelector('input[name="reviewRating"]:checked')?.value;
       const message = document.getElementById("reviewMessage").value.trim();
+      const honeypot = document.getElementById("website").value.trim();
       const status = document.getElementById("reviewSubmitStatus");
+
+      if (honeypot) return;
 
       if (!name || !rating || !message) {
         status.textContent = "Please enter your name, select a star rating, and write your review.";
@@ -2036,37 +2109,64 @@ body{overflow-x:hidden}
         return;
       }
 
-      const saved = JSON.parse(localStorage.getItem("bhumiSurveyReviews") || "[]");
-      saved.unshift({
-        name,
-        rating: Number(rating),
-        project,
-        date: new Date().toLocaleDateString("en-IN", { day:"2-digit", month:"short", year:"numeric" }),
-        text: message,
-        source: "Website Review"
-      });
-      localStorage.setItem("bhumiSurveyReviews", JSON.stringify(saved));
+      if (!supabaseReady()) {
+        status.textContent = "The review system is not connected yet. Add your Supabase settings.";
+        status.style.color = "#dc2626";
+        return;
+      }
 
-      document.getElementById("reviewForm").reset();
-      document.getElementById("star5").checked = true;
-      status.textContent = "✓ Thank you! Your review has been published on this website.";
-      status.style.color = "#047857";
-      loadWebsiteReviews();
-    }
+      const started = Number(document.getElementById("reviewStartedAt").value || Date.now());
+      if (Date.now() - started < 2500) {
+        status.textContent = "Please take a moment to complete the review.";
+        status.style.color = "#dc2626";
+        return;
+      }
 
-    function loadWebsiteReviews() {
-      const saved = JSON.parse(localStorage.getItem("bhumiSurveyReviews") || "[]");
-      const allReviews = [...saved, ...REVIEWS];
-      const original = REVIEWS.slice();
-      REVIEWS.splice(0, REVIEWS.length, ...allReviews);
-      renderReviews();
-      REVIEWS.splice(0, REVIEWS.length, ...original);
+      const button = document.querySelector("#reviewForm button[type='submit']");
+      button.disabled = true;
+      status.textContent = "Submitting securely for approval…";
+      status.style.color = "var(--muted)";
+
+      try {
+        const response = await fetch(REVIEW_FUNCTION, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "apikey": SUPABASE_PUBLISHABLE_KEY,
+            "Authorization": `Bearer ${SUPABASE_PUBLISHABLE_KEY}`
+          },
+          body: JSON.stringify({
+            name,
+            project,
+            rating: Number(rating),
+            message,
+            website: honeypot
+          })
+        });
+
+        const result = await response.json().catch(() => ({}));
+
+        if (!response.ok) throw new Error(result.error || "Unable to submit review.");
+
+        document.getElementById("reviewForm").reset();
+        document.getElementById("star5").checked = true;
+        status.textContent = "✓ Review received. It will appear after admin approval.";
+        status.style.color = "#047857";
+      } catch (error) {
+        console.error(error);
+        status.textContent = error.message || "Something went wrong. Please try again.";
+        status.style.color = "#dc2626";
+      } finally {
+        button.disabled = false;
+      }
     }
 
     // Initialize preview on page load
     window.addEventListener('DOMContentLoaded', () => {
       updatePreview();
       renderProjectPhotos();
+      const started = document.getElementById("reviewStartedAt");
+      if (started) started.value = String(Date.now());
       loadWebsiteReviews();
     });
 
