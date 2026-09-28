@@ -1293,6 +1293,11 @@ body{overflow-x:hidden}
         <p class="section-desc">Photos from our latest surveying and Total Station field projects.</p>
       </div>
       <div id="projectGallery" class="project-gallery"></div>
+      <div class="project-admin-note">
+        <strong>Easy photo update:</strong> upload new photos to the same folder as
+        <strong>index.html</strong>, then edit only the <strong>PROJECT_PHOTOS</strong>
+        list near the bottom of this file. Add, remove or replace projects there.
+      </div>
     </div>
   </section>
 
@@ -1396,9 +1401,9 @@ body{overflow-x:hidden}
         <div class="review-form-card">
           <h3>Leave a Review</h3>
           <p style="color:var(--muted);font-size:.88rem;margin-top:.25rem;">
-            Choose a star rating and send your review to Bhumi Survey on WhatsApp.
+            Choose a star rating and publish your review directly on this website.
           </p>
-          <form id="reviewForm" onsubmit="event.preventDefault(); sendReviewToWhatsApp();">
+          <form id="reviewForm" onsubmit="event.preventDefault(); submitWebsiteReview();">
             <div class="form-grid" style="margin-top:1rem;">
               <div class="form-group">
                 <label for="reviewerName">Your Name *</label>
@@ -1424,12 +1429,9 @@ body{overflow-x:hidden}
               </div>
             </div>
             <button type="submit" class="review-submit">
-              <i class="fa-brands fa-whatsapp"></i> SEND REVIEW TO WHATSAPP
+              <i class="fa-solid fa-paper-plane"></i> PUBLISH REVIEW ON WEBSITE
             </button>
-            <p class="review-note">
-              Reviews are not automatically published. Add only genuine, approved customer reviews
-              to the REVIEWS list in the script below.
-            </p>
+            <p id="reviewSubmitStatus" class="review-note">Your review will be saved in this browser and displayed on this website.</p>
           </form>
         </div>
       </div>
@@ -1960,7 +1962,7 @@ body{overflow-x:hidden}
     const PROJECT_PHOTOS = [
       {
         image: "project-01-total-station-survey.jpg",
-        title: "WIPRO PROJECT ON GOING SEPTEMBER 2026",
+        title: "Construction Site Survey",
         type: "Total Station Survey",
         location: "Bangalore, Karnataka",
         description: "Total Station surveying and site measurement work carried out at a construction project site by the Bhumi Survey field team."
@@ -2025,38 +2027,51 @@ body{overflow-x:hidden}
         </article>`).join("");
     }
 
-    function sendReviewToWhatsApp() {
+    function submitWebsiteReview() {
       const name = document.getElementById("reviewerName").value.trim();
       const project = document.getElementById("reviewProject").value.trim();
       const rating = document.querySelector('input[name="reviewRating"]:checked')?.value;
       const message = document.getElementById("reviewMessage").value.trim();
+      const status = document.getElementById("reviewSubmitStatus");
 
       if (!name || !rating || !message) {
-        alert("Please enter your name, select a star rating, and write your review.");
+        status.textContent = "Please enter your name, select a star rating, and write your review.";
+        status.style.color = "#dc2626";
         return;
       }
 
-      const msg =
-        `*NEW CUSTOMER REVIEW - BHUMI SURVEY*\n` +
-        `------------------------------------\n` +
-        `*Name:* ${name}\n` +
-        `*Project / Location:* ${project || "[Not provided]"}\n` +
-        `*Rating:* ${rating}/5 stars\n` +
-        `*Review:* ${message}\n` +
-        `------------------------------------\n` +
-        `Received via Bhumi Survey website.`;
+      const saved = JSON.parse(localStorage.getItem("bhumiSurveyReviews") || "[]");
+      saved.unshift({
+        name,
+        rating: Number(rating),
+        project,
+        date: new Date().toLocaleDateString("en-IN", { day:"2-digit", month:"short", year:"numeric" }),
+        text: message,
+        source: "Website Review"
+      });
+      localStorage.setItem("bhumiSurveyReviews", JSON.stringify(saved));
 
-      window.open(
-        `https://api.whatsapp.com/send?phone=917483091924&text=${encodeURIComponent(msg)}`,
-        "_blank"
-      );
+      document.getElementById("reviewForm").reset();
+      document.getElementById("star5").checked = true;
+      status.textContent = "✓ Thank you! Your review has been published on this website.";
+      status.style.color = "#047857";
+      loadWebsiteReviews();
+    }
+
+    function loadWebsiteReviews() {
+      const saved = JSON.parse(localStorage.getItem("bhumiSurveyReviews") || "[]");
+      const allReviews = [...saved, ...REVIEWS];
+      const original = REVIEWS.slice();
+      REVIEWS.splice(0, REVIEWS.length, ...allReviews);
+      renderReviews();
+      REVIEWS.splice(0, REVIEWS.length, ...original);
     }
 
     // Initialize preview on page load
     window.addEventListener('DOMContentLoaded', () => {
       updatePreview();
       renderProjectPhotos();
-      renderReviews();
+      loadWebsiteReviews();
     });
 
   
