@@ -775,10 +775,189 @@
         display: none;
       }
     }
-  </style>
+  
+
+    /* ==============================
+       3D MOTION GRAPHICS ENHANCEMENTS
+       ============================== */
+    .hero { position: relative; overflow: hidden; }
+    .hero::before {
+      content: ""; position:absolute; inset:0; pointer-events:none; opacity:.35;
+      background-image: linear-gradient(rgba(15,81,50,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(15,81,50,.045) 1px, transparent 1px);
+      background-size: 42px 42px; mask-image: linear-gradient(to bottom, #000, transparent 85%);
+    }
+    .hero-motion {
+      position:absolute; right:-90px; top:-120px; width:560px; height:560px;
+      pointer-events:none; perspective:900px; z-index:0;
+    }
+    .hero-motion .orbit {
+      position:absolute; left:50%; top:50%; width:330px; height:330px;
+      transform:translate(-50%,-50%) rotateX(68deg) rotateZ(12deg);
+      border:1px solid rgba(15,81,50,.16); border-radius:50%;
+      animation: orbitSpin 18s linear infinite;
+    }
+    .hero-motion .orbit:nth-child(2){ width:250px;height:250px; animation-duration:13s; animation-direction:reverse; border-color:rgba(229,142,38,.22); }
+    .hero-motion .orbit:nth-child(3){ width:430px;height:430px; animation-duration:25s; border-color:rgba(15,81,50,.09); }
+    .hero-motion .node {
+      position:absolute; width:10px;height:10px;border-radius:50%;
+      background:var(--accent); box-shadow:0 0 0 7px rgba(229,142,38,.10), 0 0 24px rgba(229,142,38,.35);
+      animation: floatNode 4s ease-in-out infinite;
+    }
+    .hero-motion .node.n1{left:18%;top:35%}.hero-motion .node.n2{right:18%;top:24%;animation-delay:1s}.hero-motion .node.n3{right:27%;bottom:22%;animation-delay:2s}
+    .hero-motion .crosshair {
+      position:absolute; left:50%;top:50%; width:105px;height:105px; transform:translate(-50%,-50%);
+      border:1px solid rgba(15,81,50,.18); border-radius:50%;
+      box-shadow:0 0 0 18px rgba(15,81,50,.025),0 0 0 36px rgba(15,81,50,.02);
+      animation: pulseTarget 3.5s ease-in-out infinite;
+    }
+    .hero-motion .crosshair::before,.hero-motion .crosshair::after{content:"";position:absolute;background:rgba(15,81,50,.22)}
+    .hero-motion .crosshair::before{left:50%;top:-16px;width:1px;height:137px}.hero-motion .crosshair::after{top:50%;left:-16px;width:137px;height:1px}
+    .hero-grid > div { position:relative; z-index:1; }
+    .hero-card-preview { transform-style:preserve-3d; will-change:transform; transition:transform .18s ease-out, box-shadow .25s ease; }
+    .hero-card-preview:hover { box-shadow:0 28px 70px rgba(15,23,42,.16); }
+    .hero-card-preview::after {
+      content:""; position:absolute; inset:-1px; border-radius:inherit; pointer-events:none;
+      background:linear-gradient(120deg, transparent 20%, rgba(255,255,255,.7) 48%, transparent 65%);
+      transform:translateX(-120%); animation:shineSweep 6s ease-in-out infinite;
+    }
+    .service-card,.project-card,.project-photo-card,.review-card { transform-style:preserve-3d; will-change:transform; transition:transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease; }
+    .service-card:hover,.project-card:hover,.project-photo-card:hover,.review-card:hover { transform:translateY(-8px) rotateX(2deg) rotateY(-2deg); box-shadow:0 22px 50px rgba(15,23,42,.12); }
+    .motion-reveal { opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s ease; }
+    .motion-reveal.is-visible { opacity:1; transform:none; }
+    .survey-points { position:absolute; inset:0; pointer-events:none; overflow:hidden; }
+    .survey-points span { position:absolute; width:4px;height:4px;border-radius:50%;background:var(--primary-light);opacity:.35; animation:pointDrift 7s ease-in-out infinite; }
+    .survey-points span:nth-child(1){left:8%;top:32%}.survey-points span:nth-child(2){left:34%;top:14%;animation-delay:1s}.survey-points span:nth-child(3){right:10%;top:44%;animation-delay:2s}.survey-points span:nth-child(4){left:58%;bottom:12%;animation-delay:3s}.survey-points span:nth-child(5){right:30%;bottom:28%;animation-delay:4s}
+    @keyframes orbitSpin { from{transform:translate(-50%,-50%) rotateX(68deg) rotateZ(0deg)} to{transform:translate(-50%,-50%) rotateX(68deg) rotateZ(360deg)} }
+    @keyframes floatNode { 0%,100%{transform:translate3d(0,0,0)} 50%{transform:translate3d(12px,-18px,25px)} }
+    @keyframes pulseTarget { 0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.75} 50%{transform:translate(-50%,-50%) scale(1.12);opacity:1} }
+    @keyframes shineSweep { 0%,45%{transform:translateX(-120%)} 65%,100%{transform:translateX(120%)} }
+    @keyframes pointDrift { 0%,100%{transform:translate3d(0,0,0);opacity:.18} 50%{transform:translate3d(16px,-24px,0);opacity:.6} }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-motion *, .survey-points span, .hero-card-preview::after { animation:none !important; }
+      .motion-reveal { opacity:1; transform:none; transition:none; }
+      .service-card,.project-card,.project-photo-card,.review-card,.hero-card-preview { transition:none; }
+    }
+    @media (max-width: 768px) {
+      .hero-motion { width:360px;height:360px;right:-150px;top:-70px;opacity:.55; }
+    }
+
+  
+
+/* ================= ADVANCED 2026 MOTION SYSTEM ================= */
+:root{--motion-green:#0f5132;--motion-lime:#72e6a4;--motion-orange:#ff8a3d;--motion-glass:rgba(255,255,255,.58)}
+html{scroll-behavior:smooth}
+body{overflow-x:hidden}
+#motionCanvas{position:fixed;inset:0;width:100%;height:100%;z-index:-2;pointer-events:none;opacity:.62}
+#cursorGlow{position:fixed;width:280px;height:280px;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(87,219,142,.13),rgba(87,219,142,0) 68%);mix-blend-mode:multiply;transition:opacity .25s ease}
+#scrollProgress{position:fixed;left:0;top:0;height:3px;width:0;z-index:10001;background:linear-gradient(90deg,var(--motion-green),var(--motion-lime),var(--motion-orange));box-shadow:0 0 18px rgba(87,219,142,.65)}
+.motion-stage{position:fixed;inset:0;pointer-events:none;z-index:-1;overflow:hidden}
+.motion-stage .blob{position:absolute;border-radius:50%;filter:blur(1px);opacity:.18;transform:translate3d(0,0,0);will-change:transform}
+.motion-stage .blob-a{width:260px;height:260px;left:-80px;top:24%;background:radial-gradient(circle at 35% 35%,#73e6a5,transparent 68%);animation:floatBlobA 14s ease-in-out infinite}
+.motion-stage .blob-b{width:320px;height:320px;right:-110px;top:62%;background:radial-gradient(circle at 35% 35%,#ffad74,transparent 68%);animation:floatBlobB 18s ease-in-out infinite}
+@keyframes floatBlobA{50%{transform:translate3d(90px,-80px,0) scale(1.18)}}
+@keyframes floatBlobB{50%{transform:translate3d(-100px,70px,0) scale(.86)}}
+.hero{isolation:isolate;perspective:1200px}
+.hero::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.13) 48%,transparent 60%);transform:translateX(-120%);animation:heroSweep 7s ease-in-out infinite}
+@keyframes heroSweep{0%,55%{transform:translateX(-120%)}75%,100%{transform:translateX(120%)}}
+.hero-card-preview{transform-style:preserve-3d;backface-visibility:hidden;transition:box-shadow .35s ease,border-color .35s ease;will-change:transform}
+.hero-card-preview::before{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1px;background:conic-gradient(from 0deg,transparent 0 25%,rgba(114,230,164,.8),transparent 40% 68%,rgba(255,138,61,.65),transparent 80%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:spinBorder 8s linear infinite;pointer-events:none}
+@keyframes spinBorder{to{transform:rotate(360deg)}}
+.hero-card-preview::after{content:"";position:absolute;inset:10px;border-radius:inherit;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(114,230,164,.16),transparent 30%);pointer-events:none;transition:opacity .2s}
+.hero-motion{transform-style:preserve-3d}
+.hero-motion .orbit{box-shadow:0 0 28px rgba(87,219,142,.18),inset 0 0 18px rgba(87,219,142,.08)}
+.hero-motion .crosshair{animation:crossPulse 2.6s ease-in-out infinite}
+@keyframes crossPulse{50%{transform:scale(1.18);filter:drop-shadow(0 0 15px rgba(87,219,142,.75))}}
+.service-card,.project-card,.project-photo-card,.review-card{transform-style:preserve-3d;will-change:transform;transition:transform .35s cubic-bezier(.2,.75,.25,1),box-shadow .35s ease}
+.service-card:hover,.project-card:hover,.project-photo-card:hover,.review-card:hover{box-shadow:0 24px 60px rgba(15,81,50,.14)}
+.service-card>* ,.project-card>* ,.project-photo-card>* ,.review-card>*{transform:translateZ(18px)}
+.btn-hero-primary,.btn-hero-wa,.btn-nav-book{position:relative;overflow:hidden;transform:translateZ(0);transition:transform .2s ease,box-shadow .2s ease}
+.btn-hero-primary::after,.btn-hero-wa::after,.btn-nav-book::after{content:"";position:absolute;top:-80%;left:-30%;width:24%;height:260%;transform:rotate(25deg) translateX(-260%);background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);transition:transform .7s ease}
+.btn-hero-primary:hover::after,.btn-hero-wa:hover::after,.btn-nav-book:hover::after{transform:rotate(25deg) translateX(650%)}
+.magnetic{will-change:transform}
+.scan-grid{position:absolute;left:50%;bottom:-90px;width:min(900px,90vw);height:300px;transform:translateX(-50%) perspective(420px) rotateX(62deg);transform-origin:center bottom;opacity:.24;background-image:linear-gradient(rgba(15,81,50,.45) 1px,transparent 1px),linear-gradient(90deg,rgba(15,81,50,.45) 1px,transparent 1px);background-size:52px 52px;mask-image:linear-gradient(to top,black,transparent);animation:gridMove 4s linear infinite}
+@keyframes gridMove{to{background-position:0 52px,52px 0}}
+.holo-badge{position:absolute;right:8%;top:18%;padding:9px 13px;border:1px solid rgba(15,81,50,.18);border-radius:999px;background:rgba(255,255,255,.45);backdrop-filter:blur(12px);font-size:.7rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--motion-green);box-shadow:0 10px 35px rgba(15,81,50,.08);animation:holoFloat 4s ease-in-out infinite}
+@keyframes holoFloat{50%{transform:translateY(-12px) rotateZ(2deg)}}
+[data-reveal]{opacity:1;transform:none;transition:opacity .8s ease,transform .9s cubic-bezier(.2,.7,.2,1)}
+[data-reveal].revealed{opacity:1;transform:none}
+[data-counter]{font-variant-numeric:tabular-nums}
+@media(max-width:768px){#cursorGlow{display:none}.holo-badge{right:4%;top:12%;font-size:.58rem}.scan-grid{width:130vw;opacity:.16}.hero::after{animation:none}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.motion-stage .blob,.hero::after,.hero-card-preview::before,.holo-badge,.scan-grid{animation:none}#motionCanvas{display:none}.hero-card-preview{transition:none}[data-reveal]{opacity:1;transform:none}}
+
+  
+/* =========================================================
+   BHUMI SURVEY — CINEMATIC 3D TERRAIN SYSTEM
+   Three.js + GSAP visual layer
+   ========================================================= */
+.hero { isolation:isolate; min-height:760px !important; padding:5rem 0 5.5rem !important; display:block !important; }
+.hero-cinematic-canvas { position:absolute; inset:0; width:100%; height:100%; display:block; z-index:0; pointer-events:none; }
+.hero-cinematic-vignette { position:absolute; inset:0; z-index:1; pointer-events:none; background:radial-gradient(circle at 72% 48%, transparent 0 18%, rgba(3,20,13,.08) 48%, rgba(2,12,8,.42) 100%), linear-gradient(90deg, rgba(3,22,14,.35), transparent 52%, rgba(3,22,14,.16)); }
+.hero-cinematic-scan { position:absolute; left:0; right:0; top:0; height:2px; z-index:2; pointer-events:none; background:linear-gradient(90deg,transparent,#7dffb0,#f5b65b,transparent); box-shadow:0 0 24px rgba(125,255,176,.7); animation:cinematicScan 5s linear infinite; opacity:.65; }
+.hero-grid { z-index:20 !important; position:relative !important; min-height:560px; }
+.hero-visual-stage { position:relative; min-height:500px; display:flex; align-items:center; justify-content:center; perspective:1200px; }
+.terrain-hud { position:absolute; inset:18px 8px auto 8px; z-index:5; display:flex; justify-content:space-between; gap:12px; pointer-events:none; color:#d9ffe8; font:600 .68rem/1.2 'Space Grotesk',sans-serif; letter-spacing:1.3px; text-transform:uppercase; }
+.terrain-hud span { border:1px solid rgba(176,255,205,.25); background:rgba(3,24,15,.34); backdrop-filter:blur(8px); padding:8px 10px; border-radius:999px; box-shadow:0 0 24px rgba(125,255,176,.06); }
+.terrain-hud .live { color:#9effc2; }
+.terrain-hud .live::before { content:''; display:inline-block; width:6px; height:6px; margin-right:6px; border-radius:50%; background:#65ff9a; box-shadow:0 0 10px #65ff9a; animation:livePulse 1.2s ease-in-out infinite; }
+.hero-card-preview { position:relative; z-index:6; width:min(440px,100%); backdrop-filter:blur(10px); background:rgba(255,255,255,.94); }
+.total-station-hud { position:absolute; z-index:5; right:-10px; bottom:25px; width:180px; padding:13px; border:1px solid rgba(125,255,176,.28); border-radius:14px; background:rgba(4,22,15,.72); color:#d9ffe8; backdrop-filter:blur(14px); box-shadow:0 18px 50px rgba(0,0,0,.28); font-size:.68rem; pointer-events:none; }
+.total-station-hud strong { display:block; color:#fff; font:700 .78rem 'Space Grotesk',sans-serif; margin-bottom:5px; }
+.total-station-hud .hud-line { display:flex; justify-content:space-between; gap:8px; color:#9fd7b5; }
+.total-station-hud .hud-line b { color:#f4bd6b; }
+.cinematic-label { position:absolute; z-index:5; left:20px; bottom:28px; color:#dfffea; font:600 .62rem/1.5 'Space Grotesk',sans-serif; letter-spacing:1.5px; text-transform:uppercase; max-width:200px; text-shadow:0 2px 12px rgba(0,0,0,.6); pointer-events:none; }
+.cinematic-label b { color:#f3b65c; }
+@keyframes cinematicScan { 0%{transform:translateY(-10px);opacity:0} 10%{opacity:.7} 50%{opacity:.9} 90%{opacity:.7} 100%{transform:translateY(720px);opacity:0} }
+@keyframes livePulse { 0%,100%{transform:scale(.75);opacity:.6} 50%{transform:scale(1.3);opacity:1} }
+@media(max-width:900px){.hero{min-height:980px}.hero-visual-stage{min-height:500px;order:2}.hero-grid{grid-template-columns:1fr}.hero-cinematic-canvas{opacity:.9}.total-station-hud{right:4px;bottom:18px}.cinematic-label{left:10px;bottom:18px}}
+@media(max-width:600px){.hero{min-height:1000px}.terrain-hud{inset:10px 4px auto 4px}.terrain-hud span{font-size:.55rem;padding:6px 8px}.terrain-hud span:nth-child(2){display:none}.total-station-hud{width:155px;font-size:.6rem}.cinematic-label{max-width:150px;font-size:.55rem}.hero-visual-stage{min-height:470px}}
+@media(prefers-reduced-motion:reduce){.hero-cinematic-scan,.terrain-hud .live::before{animation:none}.hero-cinematic-canvas{display:none}}
+
+
+/* ===== HERO VISIBILITY FIX ===== */
+.hero-cinematic-canvas{z-index:0 !important;}
+.hero-cinematic-vignette{z-index:1 !important;}
+.hero-cinematic-scan{z-index:2 !important;}
+.hero-motion,.survey-points,.scan-grid,.holo-badge{z-index:3 !important;}
+.hero-grid{position:relative !important;z-index:20 !important;opacity:1 !important;visibility:visible !important;}
+.hero-grid > div{position:relative !important;z-index:21 !important;opacity:1 !important;visibility:visible !important;}
+.hero-grid .hero-badge,.hero-grid h1,.hero-grid p,.hero-grid .hero-actions,.hero-visual-stage,.hero-visual-stage > *{opacity:1 !important;visibility:visible !important;}
+.hero-visual-stage{z-index:22 !important;}
+.hero-card-preview{z-index:30 !important;opacity:1 !important;visibility:visible !important;}
+.hero h1{position:relative;z-index:25;color:#fff !important;text-shadow:0 3px 22px rgba(0,0,0,.28);}
+.hero p{position:relative;z-index:25;}
+.hero-actions{position:relative;z-index:30;}
+.hero-cinematic-vignette{pointer-events:none !important;}
+@media(max-width:900px){.hero-grid{padding-top:40px;padding-bottom:40px;}.hero{min-height:980px !important;}}
+
+
+.hero-scroll-cue{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);z-index:50;display:flex;flex-direction:column;align-items:center;gap:6px;color:#e7fff0;text-decoration:none;font:700 .62rem/1 'Space Grotesk',sans-serif;letter-spacing:1.8px;text-transform:uppercase;text-shadow:0 2px 10px rgba(0,0,0,.6);opacity:1 !important;visibility:visible !important;}
+.hero-scroll-cue i{width:34px;height:34px;border:1px solid rgba(125,255,176,.55);border-radius:50%;display:grid;place-items:center;color:#7dffb0;background:rgba(3,24,15,.34);backdrop-filter:blur(8px);animation:heroArrow 1.5s ease-in-out infinite;}
+@keyframes heroArrow{0%,100%{transform:translateY(0);box-shadow:0 0 0 rgba(125,255,176,0)}50%{transform:translateY(7px);box-shadow:0 0 24px rgba(125,255,176,.28)}}
+@media(max-width:600px){.hero-scroll-cue{bottom:14px;font-size:.52rem}.hero-scroll-cue i{width:30px;height:30px}}
+
+</style>
+<style id="bhumi-visibility-safety">
+.hero { min-height:760px !important; }
+.hero-grid { position:relative !important; z-index:50 !important; opacity:1 !important; visibility:visible !important; display:grid !important; }
+.hero-grid > div { opacity:1 !important; visibility:visible !important; }
+.hero-badge, .hero h1, .hero p, .hero-actions, .hero-visual-stage, .hero-card-preview, .hero-scroll-cue { opacity:1 !important; visibility:visible !important; }
+.hero-visual-stage { position:relative !important; z-index:51 !important; min-height:500px !important; }
+[data-reveal], .motion-reveal { opacity:1 !important; visibility:visible !important; transform:none !important; }
+.hero-cinematic-canvas { z-index:0 !important; }
+.hero-cinematic-vignette, .hero-cinematic-scan { z-index:1 !important; }
+.hero-card-preview { z-index:60 !important; }
+.hero-scroll-cue { z-index:100 !important; }
+</style>
 </head>
 
 <body>
+
+  <!-- Advanced motion layers -->
+  <div id="scrollProgress" aria-hidden="true"></div>
+  <canvas id="motionCanvas" aria-hidden="true"></canvas>
+  <div id="cursorGlow" aria-hidden="true"></div>
+  <div class="motion-stage" aria-hidden="true"><div class="blob blob-a"></div><div class="blob blob-b"></div></div>
+
 
   <!-- Top Contact Bar -->
   <div class="topbar">
@@ -837,7 +1016,7 @@
           </li>
 
           <li>
-            <a href="#book-survey" class="btn-nav-book">
+            <a href="#book-survey" class="btn-nav-book magnetic">
               <i class="fa-brands fa-whatsapp"></i>
               Request Visit
             </a>
@@ -850,6 +1029,17 @@
 
   <!-- Hero Section -->
   <section class="hero">
+    <div class="scan-grid" aria-hidden="true"></div>
+    <div class="holo-badge"><i class="fa-solid fa-satellite-dish"></i> Live Precision System</div>
+    <div class="hero-motion" aria-hidden="true">
+      <div class="orbit"></div><div class="orbit"></div><div class="orbit"></div>
+      <div class="crosshair"></div>
+      <span class="node n1"></span><span class="node n2"></span><span class="node n3"></span>
+    </div>
+    <div class="survey-points" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+    <canvas id="bhumiTerrainCanvas" class="hero-cinematic-canvas" aria-hidden="true"></canvas>
+    <div class="hero-cinematic-vignette" aria-hidden="true"></div>
+    <div class="hero-cinematic-scan" aria-hidden="true"></div>
     <div class="container hero-grid">
 
       <div>
@@ -867,7 +1057,7 @@
         </p>
 
         <div class="hero-actions">
-          <a href="#book-survey" class="btn-hero-primary">
+          <a href="#book-survey" class="btn-hero-primary magnetic">
             <i class="fa-solid fa-calendar-check"></i>
             Request On-Site Survey
           </a>
@@ -876,7 +1066,7 @@
             href="https://api.whatsapp.com/send?phone=917483091924&text=Hello%20Bhumi%20Survey,%20I%20would%20like%20to%20inquire%20about%20a%20land%20survey."
             target="_blank"
             rel="noopener noreferrer"
-            class="btn-hero-wa"
+            class="btn-hero-wa magnetic"
           >
             <i class="fa-brands fa-whatsapp"></i>
             Quick WhatsApp
@@ -884,7 +1074,15 @@
         </div>
       </div>
 
-      <div>
+      <div class="hero-visual-stage">
+        <div class="terrain-hud" aria-hidden="true"><span class="live">Live Terrain Scan</span><span>DTM • CONTOUR • GNSS</span><span>01:24:36 UTC</span></div>
+        <div class="cinematic-label" aria-hidden="true">3D terrain reconstruction<br><b>precision survey telemetry</b></div>
+        <div class="total-station-hud" aria-hidden="true">
+          <strong>TOTAL STATION / TS-01</strong>
+          <div class="hud-line"><span>AZIMUTH</span><b id="hudAzimuth">128.42°</b></div>
+          <div class="hud-line"><span>ZENITH</span><b id="hudZenith">86.17°</b></div>
+          <div class="hud-line"><span>RANGE</span><b id="hudRange">42.8 m</b></div>
+        </div>
         <div class="hero-card-preview">
 
           <div class="hero-card-header">
@@ -924,10 +1122,15 @@
       </div>
 
     </div>
+
+    <a class="hero-scroll-cue" href="#services" aria-label="Scroll to services">
+      <span>SCROLL TO EXPLORE</span>
+      <i class="fa-solid fa-chevron-down"></i>
+    </a>
   </section>
 
   <!-- Services Section -->
-  <section id="services" class="section">
+  <section id="services" class="section" data-reveal>
     <div class="container">
 
       <div class="section-title-wrap">
@@ -945,7 +1148,7 @@
 
       <div class="services-grid">
 
-        <div class="service-card">
+        <div class="service-card motion-reveal">
           <div class="service-icon">
             <i class="fa-solid fa-map-location-dot"></i>
           </div>
@@ -958,7 +1161,7 @@
           </p>
         </div>
 
-        <div class="service-card">
+        <div class="service-card motion-reveal">
           <div class="service-icon">
             <i class="fa-solid fa-crosshairs"></i>
           </div>
@@ -971,7 +1174,7 @@
           </p>
         </div>
 
-        <div class="service-card">
+        <div class="service-card motion-reveal">
           <div class="service-icon">
             <i class="fa-solid fa-layer-group"></i>
           </div>
@@ -984,7 +1187,7 @@
           </p>
         </div>
 
-        <div class="service-card">
+        <div class="service-card motion-reveal">
           <div class="service-icon">
             <i class="fa-solid fa-draw-polygon"></i>
           </div>
@@ -1002,7 +1205,7 @@
   </section>
 
   <!-- Track Record / Projects -->
-  <section id="projects" class="section track-record-bg">
+  <section id="projects" class="section track-record-bg" data-reveal>
     <div class="container">
 
       <div class="section-title-wrap">
@@ -1019,7 +1222,7 @@
 
       <div class="project-grid">
 
-        <div class="project-card">
+        <div class="project-card motion-reveal">
           <span class="project-pill">Educational Campus</span>
 
           <h4>Amble School Project</h4>
@@ -1047,7 +1250,7 @@
           </ul>
         </div>
 
-        <div class="project-card">
+        <div class="project-card motion-reveal">
           <span class="project-pill">Urban Infrastructure</span>
 
           <h4>Banashankari Development</h4>
@@ -1082,7 +1285,7 @@
 
 
   <!-- Current Project Photos -->
-  <section id="project-photos" class="section">
+  <section id="project-photos" class="section" data-reveal>
     <div class="container">
       <div class="section-title-wrap">
         <span class="section-sub">Current Project Photos</span>
@@ -1090,16 +1293,11 @@
         <p class="section-desc">Photos from our latest surveying and Total Station field projects.</p>
       </div>
       <div id="projectGallery" class="project-gallery"></div>
-      <div class="project-admin-note">
-        <strong>Easy photo update:</strong> upload new photos to the same folder as
-        <strong>index.html</strong>, then edit only the <strong>PROJECT_PHOTOS</strong>
-        list near the bottom of this file. Add, remove or replace projects there.
-      </div>
     </div>
   </section>
 
   <!-- SEO SERVICE AREA SECTION -->
-  <section class="section" id="service-area">
+  <section class="section" id="service-area" data-reveal>
     <div class="container">
       <div class="section-title-wrap">
         <span class="section-sub">Land Surveying Services in Bangalore</span>
@@ -1112,25 +1310,25 @@
       </div>
 
       <div class="services-grid">
-        <div class="service-card">
+        <div class="service-card motion-reveal">
           <div class="service-icon"><i class="fa-solid fa-location-crosshairs"></i></div>
           <h3>Land Surveying in Bangalore</h3>
           <p>Professional land surveying and site measurement services for construction, property development and infrastructure projects.</p>
         </div>
 
-        <div class="service-card">
+        <div class="service-card motion-reveal">
           <div class="service-icon"><i class="fa-solid fa-ruler-combined"></i></div>
           <h3>Construction Site Survey</h3>
           <p>Site levels, building grid lines, setting-out, alignment checks and measurement support for construction and civil engineering projects.</p>
         </div>
 
-        <div class="service-card">
+        <div class="service-card motion-reveal">
           <div class="service-icon"><i class="fa-solid fa-mountain-sun"></i></div>
           <h3>Contour &amp; Elevation Survey</h3>
           <p>Contour mapping, spot elevations and terrain information to support site planning, grading, drainage and engineering design.</p>
         </div>
 
-        <div class="service-card">
+        <div class="service-card motion-reveal">
           <div class="service-icon"><i class="fa-solid fa-draw-polygon"></i></div>
           <h3>Property Boundary Survey</h3>
           <p>Boundary identification, demarcation and layout surveying for property development, construction and land planning.</p>
@@ -1153,7 +1351,7 @@
       </div>
 
       <div class="project-grid">
-        <div class="project-card">
+        <div class="project-card motion-reveal">
           <span class="project-pill">Bangalore</span>
           <h4>Land &amp; Construction Surveys</h4>
           <p class="project-meta">Total Station, site levels, layout and boundary services</p>
@@ -1164,7 +1362,7 @@
           </ul>
         </div>
 
-        <div class="project-card">
+        <div class="project-card motion-reveal">
           <span class="project-pill">Karnataka</span>
           <h4>Topographic &amp; Engineering Surveys</h4>
           <p class="project-meta">Contours, elevations and mapping for engineering projects</p>
@@ -1250,22 +1448,22 @@
       </div>
 
       <div class="services-grid">
-        <div class="service-card">
+        <div class="service-card motion-reveal">
           <h3>What is a Total Station survey?</h3>
           <p>A Total Station survey measures angles, distances, positions and elevations and is commonly used for construction layout, site measurement, boundary work and engineering surveys.</p>
         </div>
 
-        <div class="service-card">
+        <div class="service-card motion-reveal">
           <h3>Do you provide land surveys in Bangalore?</h3>
           <p>Bhumi Survey provides land surveying, Total Station, topographic, contour, site level and boundary demarcation services in Bangalore and other project locations in Karnataka.</p>
         </div>
 
-        <div class="service-card">
+        <div class="service-card motion-reveal">
           <h3>What is a topographic survey?</h3>
           <p>A topographic survey records ground elevations, contours, physical site features and other survey information used for planning, engineering and construction.</p>
         </div>
 
-        <div class="service-card">
+        <div class="service-card motion-reveal">
           <h3>How can I request a survey?</h3>
           <p>Use the on-site survey request form below and send your project details directly to the Bhumi Survey team through WhatsApp.</p>
         </div>
@@ -1762,7 +1960,7 @@
     const PROJECT_PHOTOS = [
       {
         image: "project-01-total-station-survey.jpg",
-        title: "Construction Site Survey",
+        title: "WIPRO PROJECT ON GOING SEPTEMBER 2026",
         type: "Total Station Survey",
         location: "Bangalore, Karnataka",
         description: "Total Station surveying and site measurement work carried out at a construction project site by the Bhumi Survey field team."
@@ -1779,7 +1977,7 @@
       const el = document.getElementById("projectGallery");
       if (!el) return;
       el.innerHTML = PROJECT_PHOTOS.map(p => `
-        <article class="project-photo-card">
+        <article class="project-photo-card motion-reveal">
           <div class="project-photo-wrap">
             <img src="${p.image}" alt="${p.title} - ${p.type} by Bhumi Survey in ${p.location}" loading="lazy" decoding="async">
           </div>
@@ -1807,7 +2005,7 @@
         avg.textContent = "—";
         stars.textContent = "☆☆☆☆☆";
         count.textContent = "0";
-        grid.innerHTML = `<article class="review-card"><h3>No reviews published yet</h3><p class="review-text">Genuine customer reviews will appear here after they are received and approved.</p></article>`;
+        grid.innerHTML = `<article class="review-card motion-reveal"><h3>No reviews published yet</h3><p class="review-text">Genuine customer reviews will appear here after they are received and approved.</p></article>`;
         return;
       }
 
@@ -1817,7 +2015,7 @@
       count.textContent = REVIEWS.length;
 
       grid.innerHTML = REVIEWS.map(r => `
-        <article class="review-card">
+        <article class="review-card motion-reveal">
           <div class="review-header">
             <div><div class="review-name">${r.name}</div><div class="review-date">${r.project || ""}${r.project && r.date ? " • " : ""}${r.date || ""}</div></div>
             <div class="stars">${starMarkup(r.rating)}</div>
@@ -1861,7 +2059,199 @@
       renderReviews();
     });
 
-  </script>
+  
+
+
+    /* ================= ADVANCED MOTION ENGINE ================= */
+    (function advancedMotion(){
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const canvas = document.getElementById('motionCanvas');
+      const ctx = canvas && canvas.getContext ? canvas.getContext('2d') : null;
+      const glow = document.getElementById('cursorGlow');
+      const progress = document.getElementById('scrollProgress');
+      const pointer = {x:innerWidth/2,y:innerHeight/2,tx:innerWidth/2,ty:innerHeight/2};
+
+      function resize(){ if(!canvas||!ctx)return; const d=Math.min(devicePixelRatio||1,2); canvas.width=innerWidth*d; canvas.height=innerHeight*d; canvas.style.width=innerWidth+'px';canvas.style.height=innerHeight+'px';ctx.setTransform(d,0,0,d,0,0); }
+      resize(); addEventListener('resize',resize,{passive:true});
+
+      const pts = Array.from({length:70},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,z:.2+Math.random()*.8,r:Math.random()*1.8+.4,v:(Math.random()-.5)*.18}));
+      function draw(){
+        if(!ctx||reduce)return;
+        ctx.clearRect(0,0,innerWidth,innerHeight);
+        pointer.x += (pointer.tx-pointer.x)*.08; pointer.y += (pointer.ty-pointer.y)*.08;
+        pts.forEach((p,i)=>{
+          p.y += p.v; if(p.y<-20)p.y=innerHeight+20; if(p.y>innerHeight+20)p.y=-20;
+          const dx=p.x-pointer.x,dy=p.y-pointer.y,d=Math.hypot(dx,dy),near=Math.max(0,1-d/180);
+          ctx.beginPath();ctx.arc(p.x,p.y,p.r+near*2.2,0,Math.PI*2);ctx.fillStyle=`rgba(15,81,50,${.08+p.z*.15+near*.3})`;ctx.fill();
+          if(i%5===0 && near>.05){ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(pointer.x+(dx*.25),pointer.y+(dy*.25));ctx.strokeStyle=`rgba(87,219,142,${near*.12})`;ctx.stroke();}
+        });
+        requestAnimationFrame(draw);
+      }
+      draw();
+
+      addEventListener('pointermove',e=>{pointer.tx=e.clientX;pointer.ty=e.clientY;if(glow){glow.style.left=e.clientX+'px';glow.style.top=e.clientY+'px';}} ,{passive:true});
+      addEventListener('scroll',()=>{const max=document.documentElement.scrollHeight-innerHeight;progress.style.width=(max>0?(scrollY/max)*100:0)+'%';},{passive:true});
+
+      // Cursor-reactive hero card
+      const hc=document.querySelector('.hero-card-preview');
+      if(hc&&!reduce){hc.addEventListener('pointermove',e=>{const r=hc.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;hc.style.setProperty('--mx',((x+.5)*100)+'%');hc.style.setProperty('--my',((y+.5)*100)+'%');hc.style.transform=`perspective(1100px) rotateX(${(-y*7).toFixed(2)}deg) rotateY(${(x*9).toFixed(2)}deg) translateZ(8px)`;});hc?.addEventListener('pointerleave',()=>hc.style.transform='');}
+
+      // Magnetic buttons
+      if(!reduce) document.querySelectorAll('.magnetic').forEach(el=>el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect();el.style.transform=`translate(${((e.clientX-r.left)/r.width-.5)*8}px,${((e.clientY-r.top)/r.height-.5)*6}px)`;}).addEventListener('pointerleave',e=>e.currentTarget.style.transform=''));
+
+      // Scroll reveal with staggered timing
+      if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('revealed');io.unobserve(e.target);}}),{threshold:.12});document.querySelectorAll('[data-reveal]').forEach((el,i)=>{el.style.transitionDelay=Math.min(i*70,350)+'ms';io.observe(el);});}
+
+      // 3D tilt for all interactive cards
+      if(!reduce) document.querySelectorAll('.service-card,.project-card,.project-photo-card,.review-card').forEach(card=>{card.addEventListener('pointermove',e=>{const r=card.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;card.style.transform=`perspective(900px) rotateX(${(-y*6).toFixed(2)}deg) rotateY(${(x*7).toFixed(2)}deg) translateY(-8px)`;});card.addEventListener('pointerleave',()=>card.style.transform='');});
+    })();
+
+    /* 3D interaction + scroll motion */
+    (function initMotionGraphics(){
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const revealItems = document.querySelectorAll('.motion-reveal');
+      if (!reduce && 'IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); }
+          });
+        }, {threshold:.12});
+        revealItems.forEach(el => io.observe(el));
+      } else revealItems.forEach(el => el.classList.add('is-visible'));
+
+      if (reduce) return;
+      document.querySelectorAll('.service-card,.project-card,.project-photo-card,.review-card').forEach(card => {
+        card.addEventListener('pointermove', e => {
+          const r = card.getBoundingClientRect();
+          const x = (e.clientX-r.left)/r.width-.5;
+          const y = (e.clientY-r.top)/r.height-.5;
+          card.style.transform = `translateY(-8px) rotateX(${(-y*5).toFixed(2)}deg) rotateY(${(x*6).toFixed(2)}deg)`;
+        });
+        card.addEventListener('pointerleave', () => { card.style.transform=''; });
+      });
+      const heroCard = document.querySelector('.hero-card-preview');
+      if (heroCard) {
+        heroCard.addEventListener('pointermove', e => {
+          const r=heroCard.getBoundingClientRect(), x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5;
+          heroCard.style.transform=`perspective(900px) rotateX(${(-y*6).toFixed(2)}deg) rotateY(${(x*8).toFixed(2)}deg) translateZ(4px)`;
+        });
+        heroCard.addEventListener('pointerleave',()=>heroCard.style.transform='');
+      }
+    })();
+</script>
+
+
+<!-- Advanced cinematic engine: Three.js + GSAP -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script>
+(function initBhumiCinematic3D(){
+  const canvas=document.getElementById('bhumiTerrainCanvas');
+  const hero=document.querySelector('.hero');
+  if(!canvas||!hero||!window.THREE) { console.warn('Bhumi 3D engine unavailable; showing HTML hero fallback.'); return; }
+  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce) return;
+
+  const scene=new THREE.Scene();
+  scene.fog=new THREE.FogExp2(0x062014,0.026);
+  const camera=new THREE.PerspectiveCamera(44,1,.1,200);
+  camera.position.set(0,10.5,18);
+
+  const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true,powerPreference:'high-performance'});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.8));
+  renderer.outputColorSpace=THREE.SRGBColorSpace;
+
+  const group=new THREE.Group(); group.rotation.x=-0.28; scene.add(group);
+  const terrain=new THREE.Group(); group.add(terrain);
+
+  // Procedural digital terrain model with contour-style wireframe.
+  const size=24, seg=72;
+  const geo=new THREE.PlaneGeometry(size,size,seg,seg);
+  const pos=geo.attributes.position;
+  function height(x,z){
+    return 0.55*Math.sin(x*.55)*Math.cos(z*.42)+0.28*Math.sin((x+z)*.9)+0.18*Math.cos(z*1.25)+0.22*Math.exp(-((x-3)*(x-3)+(z+2)*(z+2))*.08);
+  }
+  for(let i=0;i<pos.count;i++){const x=pos.getX(i),z=pos.getY(i);pos.setZ(i,height(x,z));}
+  geo.computeVertexNormals();
+  const mat=new THREE.MeshBasicMaterial({color:0x49d783,wireframe:true,transparent:true,opacity:.23});
+  const mesh=new THREE.Mesh(geo,mat); mesh.rotation.x=-Math.PI/2; mesh.position.y=-2.4; terrain.add(mesh);
+
+  // Secondary contour rings at multiple elevations.
+  const contourGroup=new THREE.Group();
+  for(let k=0;k<9;k++){
+    const pts=[]; const radius=1.5+k*1.2;
+    for(let i=0;i<=96;i++){const a=i/96*Math.PI*2; const r=radius*(1+.09*Math.sin(a*3+k)); pts.push(new THREE.Vector3(Math.cos(a)*r,-2.35+k*.08+height(Math.cos(a)*r,Math.sin(a)*r)*.08,Math.sin(a)*r));}
+    const g=new THREE.BufferGeometry().setFromPoints(pts); const l=new THREE.Line(g,new THREE.LineBasicMaterial({color:k%2?0x7dffb0:0xf2ad58,transparent:true,opacity:.14+.025*k})); contourGroup.add(l);
+  }
+  terrain.add(contourGroup);
+
+  // Survey grid.
+  const grid=new THREE.GridHelper(25,25,0x7dffb0,0x7dffb0); grid.position.y=-2.43; grid.material.transparent=true; grid.material.opacity=.08; terrain.add(grid);
+
+  // Survey points and laser target points.
+  const points=[];
+  const pg=new THREE.SphereGeometry(.055,8,8);
+  for(let i=0;i<34;i++){
+    const p=new THREE.Mesh(pg,new THREE.MeshBasicMaterial({color:i%5===0?0xf4b45f:0x7dffb0}));
+    p.position.set((Math.random()-.5)*20,-2.15+Math.random()*2.2,(Math.random()-.5)*18); p.userData.phase=Math.random()*Math.PI*2; terrain.add(p); points.push(p);
+  }
+
+  // Total Station model.
+  const station=new THREE.Group(); station.position.set(4.9,-1.1,2.7); station.rotation.y=.45; group.add(station);
+  const dark=new THREE.MeshStandardMaterial({color:0x10241a,metalness:.7,roughness:.28});
+  const green=new THREE.MeshStandardMaterial({color:0x1b8b55,metalness:.5,roughness:.32});
+  const orange=new THREE.MeshBasicMaterial({color:0xf2ad58});
+  const base=new THREE.Mesh(new THREE.CylinderGeometry(.72,.9,.22,24),dark); station.add(base);
+  for(let i=0;i<3;i++){const leg=new THREE.Mesh(new THREE.CylinderGeometry(.07,.09,2.3,8),dark); leg.position.set(Math.cos(i*2.094)*.55,-1.15,Math.sin(i*2.094)*.55); leg.rotation.z=Math.cos(i*2.094)*.35; leg.rotation.x=Math.sin(i*2.094)*.35; station.add(leg);}
+  const body=new THREE.Mesh(new THREE.BoxGeometry(1.05,.65,.72),green); body.position.y=.42; station.add(body);
+  const scope=new THREE.Mesh(new THREE.CylinderGeometry(.16,.16,1.05,16),dark); scope.rotation.z=Math.PI/2; scope.position.set(0,.72,.1); station.add(scope);
+  const lens=new THREE.Mesh(new THREE.CircleGeometry(.13,20),orange); lens.rotation.y=Math.PI/2; lens.position.set(.53,.72,.1); station.add(lens);
+  const beamGeo=new THREE.CylinderGeometry(.018,.018,10,8,1,true); const beam=new THREE.Mesh(beamGeo,new THREE.MeshBasicMaterial({color:0xf2ad58,transparent:true,opacity:.45})); beam.rotation.z=Math.PI/2; beam.position.set(5.2,.72,2.7); group.add(beam);
+  const target=new THREE.Mesh(new THREE.RingGeometry(.22,.28,32),new THREE.MeshBasicMaterial({color:0xf2ad58,transparent:true,opacity:.8,side:THREE.DoubleSide})); target.rotation.x=-Math.PI/2; target.position.set(8.2,-1.9,2.7); group.add(target);
+
+  // Orbiting telemetry nodes.
+  const orb=new THREE.Group(); group.add(orb);
+  for(let i=0;i<6;i++){const n=new THREE.Mesh(new THREE.SphereGeometry(.06,8,8),new THREE.MeshBasicMaterial({color:0x8affb3})); const a=i/6*Math.PI*2; n.position.set(Math.cos(a)*7,1.1+Math.sin(a*2)*.6,Math.sin(a)*7); orb.add(n);}
+
+  const ambient=new THREE.AmbientLight(0x9bffbd,.9); scene.add(ambient);
+  const key=new THREE.DirectionalLight(0xffffff,1.4); key.position.set(5,10,8); scene.add(key);
+
+  function resize(){const r=hero.getBoundingClientRect(); const w=Math.max(1,r.width),h=Math.max(1,r.height); renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix();}
+  resize(); addEventListener('resize',resize,{passive:true});
+
+  const pointer={x:0,y:0,tx:0,ty:0};
+  addEventListener('pointermove',e=>{pointer.tx=(e.clientX/innerWidth-.5)*2; pointer.ty=(e.clientY/innerHeight-.5)*2;},{passive:true});
+
+  // GSAP-style cinematic timeline and smooth camera drift.
+  if(window.gsap){
+    gsap.to(group.rotation,{y:'+=0.22',duration:7,ease:'sine.inOut',repeat:-1,yoyo:true});
+    gsap.to(beam.material,{opacity:.12,duration:1.5,ease:'sine.inOut',repeat:-1,yoyo:true});
+    gsap.to(target.scale,{x:1.35,y:1.35,duration:1.3,ease:'sine.inOut',repeat:-1,yoyo:true});
+    gsap.to('.terrain-hud',{y:-4,duration:2,ease:'power2.out',repeat:-1,yoyo:true});
+    gsap.set('.hero-grid',{opacity:1,visibility:'visible'});
+  }
+
+  const clock=new THREE.Clock();
+  function render(){
+    const t=clock.getElapsedTime();
+    pointer.x+=(pointer.tx-pointer.x)*.025; pointer.y+=(pointer.ty-pointer.y)*.025;
+    camera.position.x+=(pointer.x*1.35-camera.position.x)*.018;
+    camera.position.y+=(10.5-pointer.y*1.1-camera.position.y)*.018;
+    camera.lookAt(0,-1.3,0);
+    terrain.rotation.y=t*.025;
+    contourGroup.rotation.y=-t*.012;
+    points.forEach((p,i)=>{p.position.y+=Math.sin(t*1.5+p.userData.phase)*.0008; p.scale.setScalar(1+Math.sin(t*2+p.userData.phase)*.16);});
+    station.rotation.y=.45+Math.sin(t*.65)*.18; station.rotation.x=Math.sin(t*.45)*.035;
+    beam.rotation.y=Math.sin(t*.65)*.12; target.rotation.z=t*.8; orb.rotation.y=t*.25;
+    renderer.render(scene,camera); requestAnimationFrame(render);
+  }
+  render();
+
+  // Telemetry values.
+  const az=document.getElementById('hudAzimuth'),ze=document.getElementById('hudZenith'),ra=document.getElementById('hudRange');
+  setInterval(()=>{const t=performance.now()/1000;if(az)az.textContent=(128.42+Math.sin(t*.7)*1.8).toFixed(2)+'°';if(ze)ze.textContent=(86.17+Math.cos(t*.55)*.8).toFixed(2)+'°';if(ra)ra.textContent=(42.8+Math.sin(t*.45)*1.4).toFixed(1)+' m';},120);
+})();
+</script>
 
 </body>
 </html>
