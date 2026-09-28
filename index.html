@@ -6,22 +6,8 @@
 
  <meta name="google-site-verification" content="BKErhkKEwL9M6QTREZ4g8raCCv3Oeio9vxSEeEMoCZk" />
 
-  <title>Bhumi Survey | Land Surveyor in Bangalore</title>
-  <meta name="description" content="Bhumi Survey is a land surveying and Total Station survey company in Bangalore, Karnataka. We provide topographic, contour, boundary and site level surveying services.">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-  <meta name="author" content="Bhumi Survey" />
-  <link rel="canonical" href="https://bhumi-survey.vercel.app/" />
-
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Bhumi Survey | Land Surveyor in Bangalore" />
-  <meta property="og:description" content="Bhumi Survey provides land surveying, Total Station, topographic, contour, boundary and site level surveying services in Bangalore, Karnataka." />
-  <meta property="og:url" content="https://bhumi-survey.vercel.app/" />
-  <meta property="og:site_name" content="Bhumi Survey" />
-
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Bhumi Survey | Land Surveyor in Bangalore" />
-  <meta name="twitter:description" content="Land surveying, Total Station, topographic, contour, boundary and site level surveying services in Bangalore, Karnataka." />
-
+  <title>Bhumi Survey | Topo Mapping & Surveying Consultant</title>
+  <meta name="description" content="Professional Topographical Mapping, Total Station Survey, Block Levels, and Land Surveying Consultants based in Bengaluru." />
 
   <!-- Google Fonts & Font Awesome -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -473,6 +459,89 @@
       color: var(--primary-light);
     }
 
+
+    /* Project Photos Gallery */
+    .project-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .project-photo-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .project-photo-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.10);
+    }
+    .project-photo-wrap {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      background: #E2E8F0;
+    }
+    .project-photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    .project-photo-card:hover .project-photo-wrap img {
+      transform: scale(1.04);
+    }
+    .project-photo-content {
+      padding: 1.25rem 1.35rem 1.4rem;
+    }
+    .project-photo-content h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.4rem;
+    }
+    .project-photo-content p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.55;
+    }
+    .project-photo-location {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 0.8rem;
+      color: var(--primary);
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+
+    /* Reviews and editable project gallery */
+    .reviews-section { background:#F8FAFC; }
+    .reviews-summary { display:grid; grid-template-columns:280px 1fr; gap:2rem; margin-bottom:2rem; }
+    .rating-summary-card,.review-form-card,.review-card {
+      background:#fff; border:1px solid var(--border); border-radius:14px;
+      padding:1.5rem; box-shadow:0 8px 25px rgba(0,0,0,.05);
+    }
+    .rating-big { font-size:3rem; font-weight:800; line-height:1; margin-bottom:.5rem; }
+    .stars { color:#F59E0B; letter-spacing:2px; font-size:1.15rem; }
+    .rating-summary-card p { color:var(--muted); font-size:.88rem; margin-top:.55rem; }
+    .reviews-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.5rem; }
+    .review-header { display:flex; justify-content:space-between; gap:1rem; align-items:flex-start; margin-bottom:.8rem; }
+    .review-name { font-weight:800; color:var(--dark); }
+    .review-date { color:var(--muted); font-size:.75rem; margin-top:.15rem; }
+    .review-text { color:var(--slate); font-size:.9rem; line-height:1.6; }
+    .review-source { display:inline-flex; margin-top:1rem; font-size:.75rem; font-weight:700; color:var(--primary); background:#DCFCE7; padding:.25rem .6rem; border-radius:20px; }
+    .star-picker { display:flex; flex-direction:row-reverse; justify-content:flex-end; gap:.15rem; margin-top:.35rem; }
+    .star-picker input { display:none; }
+    .star-picker label { cursor:pointer; color:#CBD5E1; font-size:1.8rem; }
+    .star-picker label:hover,.star-picker label:hover~label,.star-picker input:checked~label { color:#F59E0B; }
+    .review-submit { background:var(--primary); color:#fff; border:0; padding:.85rem 1.2rem; border-radius:8px; font-weight:800; cursor:pointer; width:100%; margin-top:.75rem; }
+    .review-note,.project-admin-note { color:var(--muted); font-size:.78rem; margin-top:.7rem; line-height:1.5; }
+    .project-admin-note { padding:.9rem 1rem; background:#FFF7ED; border:1px solid #FED7AA; border-radius:10px; color:#9A3412; }
+    @media(max-width:700px){ .reviews-summary{grid-template-columns:1fr;} }
+
     /* REQUEST SURVEY VISIT BOOKING SECTION */
     .booking-section {
       background: linear-gradient(180deg, #F8FAFC 0%, #EEF2F6 100%);
@@ -759,6 +828,9 @@
           <li>
             <a href="#projects">Projects</a>
           </li>
+          <li>
+            <a href="#reviews">Reviews</a>
+          </li>
 
           <li>
             <a href="#contact">Contact</a>
@@ -786,12 +858,12 @@
           Topo Mapping &amp; Precision Survey Consultants
         </div>
 
-        <h1>Bhumi Survey – Land Surveyor in Bangalore</h1>
+        <h1>Precision Geodetic, Boundary &amp; Elevation Surveys.</h1>
 
         <p>
-          Bhumi Survey provides professional land surveying, Total Station surveys,
-          topographic mapping, contour surveys, boundary demarcation and site level
-          surveys in Bangalore and across Karnataka for construction and infrastructure projects.
+          Executing Total Station contour mappings, high-accuracy block levelling,
+          and layout demarcations across Karnataka &amp; South India for construction,
+          schools, highways, and infrastructure.
         </p>
 
         <div class="hero-actions">
@@ -1007,6 +1079,25 @@
     </div>
   </section>
 
+
+
+  <!-- Current Project Photos -->
+  <section id="project-photos" class="section">
+    <div class="container">
+      <div class="section-title-wrap">
+        <span class="section-sub">Current Project Photos</span>
+        <h2 class="section-title">Bhumi Survey Field Work</h2>
+        <p class="section-desc">Photos from our latest surveying and Total Station field projects.</p>
+      </div>
+      <div id="projectGallery" class="project-gallery"></div>
+      <div class="project-admin-note">
+        <strong>Easy photo update:</strong> upload new photos to the same folder as
+        <strong>index.html</strong>, then edit only the <strong>PROJECT_PHOTOS</strong>
+        list near the bottom of this file. Add, remove or replace projects there.
+      </div>
+    </div>
+  </section>
+
   <!-- SEO SERVICE AREA SECTION -->
   <section class="section" id="service-area">
     <div class="container">
@@ -1087,39 +1178,65 @@
     </div>
   </section>
 
-  <!-- BANGALORE LOCAL SEO / SERVICE AREA SECTION -->
-  <section id="bangalore-survey-services" class="section">
+
+  <!-- Customer Reviews & Star Ratings -->
+  <section id="reviews" class="section reviews-section">
     <div class="container">
       <div class="section-title-wrap">
-        <span class="section-sub">Bangalore &amp; Karnataka</span>
-        <h2 class="section-title">Bhumi Survey Services in Bangalore</h2>
-        <p class="section-desc">
-          Professional land surveying and site measurement services for residential,
-          commercial, industrial, infrastructure and development projects.
-        </p>
+        <span class="section-sub">Customer Reviews</span>
+        <h2 class="section-title">Reviews &amp; Star Ratings</h2>
+        <p class="section-desc">Genuine customer feedback about Bhumi Survey services.</p>
       </div>
 
-      <div class="services-grid">
-        <div class="service-card">
-          <h3>Land Surveying in Bangalore</h3>
-          <p>Land measurement and site survey services for property planning, development and construction projects in Bangalore.</p>
+      <div class="reviews-summary">
+        <div class="rating-summary-card">
+          <div class="rating-big" id="averageRating">—</div>
+          <div class="stars" id="averageStars">☆☆☆☆☆</div>
+          <p><strong id="reviewCount">0</strong> customer reviews</p>
         </div>
 
-        <div class="service-card">
-          <h3>Total Station Survey in Bangalore</h3>
-          <p>Accurate angle, distance and elevation measurements for construction, layout, engineering and site documentation.</p>
-        </div>
-
-        <div class="service-card">
-          <h3>Topographic &amp; Contour Survey</h3>
-          <p>Ground elevation, contour and physical-feature surveys to support planning, design, earthwork and infrastructure projects.</p>
-        </div>
-
-        <div class="service-card">
-          <h3>Boundary &amp; Site Level Survey</h3>
-          <p>Boundary demarcation and site-level survey services for land development, construction layouts and project preparation.</p>
+        <div class="review-form-card">
+          <h3>Leave a Review</h3>
+          <p style="color:var(--muted);font-size:.88rem;margin-top:.25rem;">
+            Choose a star rating and send your review to Bhumi Survey on WhatsApp.
+          </p>
+          <form id="reviewForm" onsubmit="event.preventDefault(); sendReviewToWhatsApp();">
+            <div class="form-grid" style="margin-top:1rem;">
+              <div class="form-group">
+                <label for="reviewerName">Your Name *</label>
+                <input id="reviewerName" class="form-control" required placeholder="Your name">
+              </div>
+              <div class="form-group">
+                <label for="reviewProject">Project / Location</label>
+                <input id="reviewProject" class="form-control" placeholder="e.g. Bangalore">
+              </div>
+              <div class="form-group form-group-full">
+                <label>Your Rating *</label>
+                <div class="star-picker">
+                  <input type="radio" id="star5" name="reviewRating" value="5" checked><label for="star5">★</label>
+                  <input type="radio" id="star4" name="reviewRating" value="4"><label for="star4">★</label>
+                  <input type="radio" id="star3" name="reviewRating" value="3"><label for="star3">★</label>
+                  <input type="radio" id="star2" name="reviewRating" value="2"><label for="star2">★</label>
+                  <input type="radio" id="star1" name="reviewRating" value="1"><label for="star1">★</label>
+                </div>
+              </div>
+              <div class="form-group form-group-full">
+                <label for="reviewMessage">Your Review *</label>
+                <textarea id="reviewMessage" class="form-control" rows="4" required placeholder="Tell us about your experience..."></textarea>
+              </div>
+            </div>
+            <button type="submit" class="review-submit">
+              <i class="fa-brands fa-whatsapp"></i> SEND REVIEW TO WHATSAPP
+            </button>
+            <p class="review-note">
+              Reviews are not automatically published. Add only genuine, approved customer reviews
+              to the REVIEWS list in the script below.
+            </p>
+          </form>
         </div>
       </div>
+
+      <div id="reviewsGrid" class="reviews-grid"></div>
     </div>
   </section>
 
@@ -1155,64 +1272,6 @@
       </div>
     </div>
   </section>
-
-  <!-- LOCAL BUSINESS + ORGANIZATION STRUCTURED DATA -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": ["LocalBusiness", "ProfessionalService"],
-    "@id": "https://bhumi-survey.vercel.app/#business",
-    "name": "Bhumi Survey",
-    "url": "https://bhumi-survey.vercel.app/",
-    "logo": "https://bhumi-survey.vercel.app/logo.svg",
-    "description": "Bhumi Survey is a land surveying and Total Station survey company providing topographic, contour, boundary and site level surveying services in Bangalore and Karnataka.",
-    "telephone": "+91 74830 91924",
-    "email": "bhumisurvey@gmail.com",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Bengaluru",
-      "addressRegion": "Karnataka",
-      "postalCode": "560049",
-      "addressCountry": "IN"
-    },
-    "areaServed": [
-      {
-        "@type": "City",
-        "name": "Bengaluru"
-      },
-      {
-        "@type": "State",
-        "name": "Karnataka"
-      }
-    ],
-    "knowsAbout": [
-      "Land Surveying",
-      "Total Station Survey",
-      "Topographic Survey",
-      "Contour Survey",
-      "Boundary Survey",
-      "Site Level Survey",
-      "Construction Layout Survey",
-      "Earthwork Volume Calculation"
-    ],
-    "sameAs": []
-  }
-  </script>
-
-  <!-- WEBSITE STRUCTURED DATA -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "@id": "https://bhumi-survey.vercel.app/#website",
-    "url": "https://bhumi-survey.vercel.app/",
-    "name": "Bhumi Survey",
-    "description": "Land surveying and Total Station survey services in Bangalore, Karnataka.",
-    "publisher": {
-      "@id": "https://bhumi-survey.vercel.app/#business"
-    }
-  }
-  </script>
 
   <!-- FAQ STRUCTURED DATA -->
   <script type="application/ld+json">
@@ -1578,12 +1637,7 @@
       All Rights Reserved.
     </div>
 
-  
-        <p style="margin-top:1rem;font-size:0.85rem;color:var(--muted);">
-          Bhumi Survey provides land surveying, Total Station, topographic, contour,
-          boundary and site level survey services in Bangalore and Karnataka.
-        </p>
-</footer>
+  </footer>
 
   <!-- Script for WhatsApp Formatting and Auto Preview -->
   <script>
@@ -1699,9 +1753,112 @@
       window.open(waUrl, '_blank');
     }
 
+
+    /*
+      EASY UPDATE AREA
+      PROJECT_PHOTOS: change/add your current project photos here.
+      REVIEWS: add only genuine reviews that you have permission to publish.
+    */
+    const PROJECT_PHOTOS = [
+      {
+        image: "project-01-total-station-survey.jpg",
+        title: "Construction Site Survey",
+        type: "Total Station Survey",
+        location: "Bangalore, Karnataka",
+        description: "Total Station surveying and site measurement work carried out at a construction project site by the Bhumi Survey field team."
+      }
+    ];
+
+    const REVIEWS = [
+      // Example:
+      // { name:"Customer Name", rating:5, project:"Bangalore", date:"September 2026",
+      //   text:"Actual customer review.", source:"Customer Review" }
+    ];
+
+    function renderProjectPhotos() {
+      const el = document.getElementById("projectGallery");
+      if (!el) return;
+      el.innerHTML = PROJECT_PHOTOS.map(p => `
+        <article class="project-photo-card">
+          <div class="project-photo-wrap">
+            <img src="${p.image}" alt="${p.title} - ${p.type} by Bhumi Survey in ${p.location}" loading="lazy" decoding="async">
+          </div>
+          <div class="project-photo-content">
+            <span class="project-pill">${p.type}</span>
+            <h3>${p.title}</h3>
+            <p>${p.description}</p>
+            <span class="project-photo-location"><i class="fa-solid fa-location-dot"></i> ${p.location}</span>
+          </div>
+        </article>`).join("");
+    }
+
+    function starMarkup(rating) {
+      return [1,2,3,4,5].map(i => `<span style="color:${i <= Number(rating) ? "#F59E0B" : "#CBD5E1"}">★</span>`).join("");
+    }
+
+    function renderReviews() {
+      const grid = document.getElementById("reviewsGrid");
+      const avg = document.getElementById("averageRating");
+      const stars = document.getElementById("averageStars");
+      const count = document.getElementById("reviewCount");
+      if (!grid) return;
+
+      if (!REVIEWS.length) {
+        avg.textContent = "—";
+        stars.textContent = "☆☆☆☆☆";
+        count.textContent = "0";
+        grid.innerHTML = `<article class="review-card"><h3>No reviews published yet</h3><p class="review-text">Genuine customer reviews will appear here after they are received and approved.</p></article>`;
+        return;
+      }
+
+      const average = REVIEWS.reduce((s,r) => s + Number(r.rating || 0), 0) / REVIEWS.length;
+      avg.textContent = average.toFixed(1);
+      stars.innerHTML = starMarkup(Math.round(average));
+      count.textContent = REVIEWS.length;
+
+      grid.innerHTML = REVIEWS.map(r => `
+        <article class="review-card">
+          <div class="review-header">
+            <div><div class="review-name">${r.name}</div><div class="review-date">${r.project || ""}${r.project && r.date ? " • " : ""}${r.date || ""}</div></div>
+            <div class="stars">${starMarkup(r.rating)}</div>
+          </div>
+          <p class="review-text">“${r.text}”</p>
+          <span class="review-source">${r.source || "Customer Review"}</span>
+        </article>`).join("");
+    }
+
+    function sendReviewToWhatsApp() {
+      const name = document.getElementById("reviewerName").value.trim();
+      const project = document.getElementById("reviewProject").value.trim();
+      const rating = document.querySelector('input[name="reviewRating"]:checked')?.value;
+      const message = document.getElementById("reviewMessage").value.trim();
+
+      if (!name || !rating || !message) {
+        alert("Please enter your name, select a star rating, and write your review.");
+        return;
+      }
+
+      const msg =
+        `*NEW CUSTOMER REVIEW - BHUMI SURVEY*\n` +
+        `------------------------------------\n` +
+        `*Name:* ${name}\n` +
+        `*Project / Location:* ${project || "[Not provided]"}\n` +
+        `*Rating:* ${rating}/5 stars\n` +
+        `*Review:* ${message}\n` +
+        `------------------------------------\n` +
+        `Received via Bhumi Survey website.`;
+
+      window.open(
+        `https://api.whatsapp.com/send?phone=917483091924&text=${encodeURIComponent(msg)}`,
+        "_blank"
+      );
+    }
+
     // Initialize preview on page load
     window.addEventListener('DOMContentLoaded', () => {
       updatePreview();
+      renderProjectPhotos();
+      renderReviews();
     });
 
   </script>
